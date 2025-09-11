@@ -24,7 +24,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.textFieldModel.controller,
-      cursorColor: ColorsTheme().whiteColor,
+      cursorColor: ColorsTheme().primaryDark,
       validator: widget.textFieldModel.validator,
       autovalidateMode: widget.textFieldModel.autovalidateMode,
       obscureText: isObscured,
@@ -32,17 +32,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       autofocus: widget.textFieldModel.autofocus,
       focusNode: widget.textFieldModel.focusNode,
       onFieldSubmitted: widget.textFieldModel.onFieldSubmitted,
-      style: TextStyle(color: ColorsTheme().whiteColor),
+      style: TextStyle(color: ColorsTheme().primaryDark),
       decoration: InputDecoration(
         labelText: widget.textFieldModel.labelText,
         hintText: widget.textFieldModel.hintText,
         errorText: widget.textFieldModel.errorText,
         hintStyle: TextStyle(color: ColorsTheme().grayWhite),
-        labelStyle: TextStyle(color: ColorsTheme().whiteColor),
+        labelStyle: TextStyle(color: ColorsTheme().primaryDark),
         prefixIcon: Icon(
           widget.textFieldModel.icon,
           size: 22,
-          color: ColorsTheme().whiteColor,
+          color: ColorsTheme().primaryDark,
         ),
         prefixIconConstraints: const BoxConstraints(
           minHeight: 40, // علشان الأيقونة تبقى في النص
@@ -56,7 +56,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 },
                 child: Icon(
                   isObscured ? Icons.visibility_off : Icons.visibility,
-                  color: ColorsTheme().whiteColor,
+                  color: ColorsTheme().primaryDark,
                 ),
               )
             : null,
@@ -70,7 +70,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   OutlineInputBorder _customOutlineInputBorder() {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
-      borderSide: BorderSide(color: ColorsTheme().whiteColor),
+      borderSide: BorderSide(color: ColorsTheme().primaryDark),
     );
   }
 }
