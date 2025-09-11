@@ -10,19 +10,24 @@ class ColorsTheme {
   // Factory constructor to return the same instance
   factory ColorsTheme() => _instance;
 
-  // Primary color and its shades
-  final primaryColor = const Color(0xFF4A90E2); // Azure Blue
-  final primaryLight = const Color(0xFF7ABAF2); // Light Blue
-  final primaryDark = const Color(0xFF2E4374); // Dark Blue
+  // Primary color (Gold) and its shades
+  final primaryColor = const Color(0xFFFFD700); // Gold
+  final primaryLight = const Color(0xFFFFE766); // Light Gold
+  final primaryDark = const Color(0xFFB8860B); // Dark Goldenrod
 
-  // Accent color for highlights
+  // Secondary color (Red) and its shades
+  final secondaryColor = const Color(0xFFE53935); // Red
+  final secondaryLight = const Color(0xFFFF6F60); // Light Red
+  final secondaryDark = const Color(0xFFAB000D); // Dark Red
+
+  // Accent color (ممكن تسيبه أو تغيره على حسب احتياجك)
   final accentColor = const Color(0xFF27AE60); // Soft Green
 
   // Neutral colors
   final whiteColor = Colors.white;
   final backgroundColor = const Color(0xFFF5F7FA); // Light Grayish Blue
   final cardColor = Colors.white;
-
+  final grayWhite = const Color(0xFFB0B0B0); // Grayish White
   // Error color
   final errorColor = Colors.red;
 }

@@ -1,14 +1,30 @@
+import 'package:david_psalmist/core/routing/animation_route.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
+import 'package:david_psalmist/features/home/ui/home_view.dart';
+import 'package:david_psalmist/features/login/ui/login_view.dart';
+import 'package:david_psalmist/features/register/ui/register_view.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
-    initialLocation: Routes.productList,
+    initialLocation: Routes.registerView,
     routes: [
-      // GoRoute(
-      //   path: Routes.productList,
-      //   pageBuilder: (context, state) => fadeTransitionPage(ProductsView()),
-      // ),
+      // Register view
+      GoRoute(
+        path: Routes.registerView,
+        pageBuilder: (context, state) => fadeTransitionPage(RegisterView()),
+      ),
+      // Login view
+      GoRoute(
+        path: Routes.loginView,
+        pageBuilder: (context, state) => fadeTransitionPage(LoginView()),
+      ),
+      // Home view
+      GoRoute(
+        path: Routes.homeView,
+        pageBuilder: (context, state) => fadeTransitionPage(HomeView()),
+      ),
+
       // GoRoute(
       //   path: Routes.productDetails,
       //   pageBuilder: (context, state) {
