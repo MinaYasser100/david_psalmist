@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "964526770624",
+    "project_id": "david-psalmist",
+    "storage_bucket": "david-psalmist.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964526770624:android:3f21942944c4ff00f02025",
+        "android_client_info": {
+          "package_name": "com.example.david_psalmist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAE_kteJ5uhlqXpnWJ6CTkz-StsrQFfTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
