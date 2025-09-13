@@ -22,12 +22,18 @@ class _RegisterViewState extends State<RegisterView> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
+  late FocusNode emailFocusNode;
+  late FocusNode passwordFocusNode;
+  late FocusNode confirmPasswordFocusNode;
 
   @override
   void initState() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
+    emailFocusNode = FocusNode();
+    passwordFocusNode = FocusNode();
+    confirmPasswordFocusNode = FocusNode();
     super.initState();
   }
 
@@ -103,6 +109,9 @@ class _RegisterViewState extends State<RegisterView> {
               emailController: emailController,
               passwordController: passwordController,
               confirmPasswordController: confirmPasswordController,
+              emailFocusNode: emailFocusNode,
+              passwordFocusNode: passwordFocusNode,
+              confirmPasswordFocusNode: confirmPasswordFocusNode,
             ),
           ],
         ),

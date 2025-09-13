@@ -1,11 +1,8 @@
-import 'package:david_psalmist/core/model/text_field_model/text_field_model.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
-import 'package:david_psalmist/core/utils/colors.dart';
-import 'package:david_psalmist/core/utils/show_top_toast.dart';
-import 'package:david_psalmist/core/validation/validatoin.dart';
-import 'package:david_psalmist/core/widgets/custom_text_form_field.dart';
+import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/features/register/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
-import 'package:david_psalmist/features/register/manager/register_cubit/register_cubit.dart';
+import 'package:david_psalmist/features/register/ui/widgets/register_form_fields.dart';
+import 'package:david_psalmist/features/register/ui/widgets/register_submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -17,12 +14,18 @@ class RegisterBodyView extends StatelessWidget {
     required this.emailController,
     required this.passwordController,
     required this.confirmPasswordController,
+    required this.emailFocusNode,
+    required this.passwordFocusNode,
+    required this.confirmPasswordFocusNode,
   }) : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
+  final FocusNode emailFocusNode;
+  final FocusNode passwordFocusNode;
+  final FocusNode confirmPasswordFocusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -39,87 +42,32 @@ class RegisterBodyView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomTextFormField(
-                    textFieldModel: TextFieldModel(
-                      controller: emailController,
-                      labelText: "Email",
-                      hintText: "Enter your email",
-                      icon: Icons.email,
-                      obscureText: false,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) => Validatoin.emailValidation(value),
-                    ),
+                  RegisterFormFields(
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    confirmPasswordController: confirmPasswordController,
+                    emailFocusNode: emailFocusNode,
+                    passwordFocusNode: passwordFocusNode,
+                    confirmPasswordFocusNode: confirmPasswordFocusNode,
                   ),
-                  const SizedBox(height: 20),
-                  CustomTextFormField(
-                    textFieldModel: TextFieldModel(
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: passwordController,
-                      labelText: "Password",
-                      hintText: "Enter your password",
-                      icon: Icons.lock,
-                      obscureText: true,
-                      validator: (value) => Validatoin.validatePassword(value),
-                    ),
+                  RegisterSubmitButton(
+                    formKey: _formKey,
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    confirmPasswordController: confirmPasswordController,
                   ),
-                  const SizedBox(height: 20),
-                  CustomTextFormField(
-                    textFieldModel: TextFieldModel(
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: confirmPasswordController,
-                      labelText: "Confirm Password",
-                      hintText: "Re-enter your password",
-                      icon: Icons.lock_outline,
-                      obscureText: true,
-                      validator: (value) => value != passwordController.text
-                          ? "Passwords do not match"
-                          : null,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  BlocConsumer<RegisterCubit, RegisterState>(
-                    listener: (context, state) {
-                      if (state is RegisterSuccess) {
-                        context.push(Routes.loginView);
-                        showSuccessToast(
-                          context,
-                          'Success',
-                          'Register Process is Successful',
-                        );
-                      }
-                      if (state is RegisterError) {
-                        showErrorToast(context, 'Error', state.message);
-                      }
-                    },
-                    builder: (context, state) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorsTheme().primaryDark,
-                        ),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            context
-                                .read<RegisterCubit>()
-                                .registerWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                );
-                          } else {
-                            context
-                                .read<AutovalidateModeCubit>()
-                                .changeAutovalidateMode();
-                          }
-                        },
-                        child: Text(
-                          "Register",
-                          style: TextStyle(
-                            color: ColorsTheme().whiteColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      );
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account? ',
+                        style: AppTextStyles.styleBold16sp(context),
+                      ),
+                      TextButton(
+                        onPressed: () => context.go(Routes.loginView),
+                        child: const Text('Login'),
+                      ),
+                    ],
                   ),
                 ],
               ),
