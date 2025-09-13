@@ -1,5 +1,6 @@
 import 'package:david_psalmist/core/routing/animation_route.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
+import 'package:david_psalmist/features/forgot_password/ui/forgot_password_view.dart';
 import 'package:david_psalmist/features/home/ui/home_view.dart';
 import 'package:david_psalmist/features/login/ui/login_view.dart';
 import 'package:david_psalmist/features/register/ui/register_view.dart';
@@ -7,7 +8,7 @@ import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
-    initialLocation: Routes.registerView,
+    initialLocation: Routes.loginView,
     routes: [
       // Register view
       GoRoute(
@@ -23,6 +24,12 @@ abstract class AppRouter {
       GoRoute(
         path: Routes.homeView,
         pageBuilder: (context, state) => fadeTransitionPage(HomeView()),
+      ),
+      // Forgot Password
+      GoRoute(
+        path: Routes.forgotPasswordView,
+        pageBuilder: (context, state) =>
+            fadeTransitionPage(ForgotPasswordView()),
       ),
 
       // GoRoute(

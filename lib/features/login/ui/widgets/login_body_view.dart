@@ -1,10 +1,11 @@
-import 'package:david_psalmist/core/model/text_field_model/text_field_model.dart';
-import 'package:david_psalmist/core/utils/colors.dart';
-import 'package:david_psalmist/core/validation/validatoin.dart';
-import 'package:david_psalmist/core/widgets/custom_text_form_field.dart';
+import 'package:david_psalmist/core/routing/routes.dart';
+import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/features/login/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
+import 'package:david_psalmist/features/login/ui/widgets/login_form_fields.dart';
+import 'package:david_psalmist/features/login/ui/widgets/login_submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginBodyView extends StatelessWidget {
   const LoginBodyView({
@@ -12,11 +13,19 @@ class LoginBodyView extends StatelessWidget {
     required GlobalKey<FormState> formKey,
     required this.emailController,
     required this.passwordController,
+    required this.adminController,
+    required this.emailFocusNode,
+    required this.passwordFocusNode,
+    required this.adminFocusNode,
   }) : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final TextEditingController adminController;
+  final FocusNode emailFocusNode;
+  final FocusNode passwordFocusNode;
+  final FocusNode adminFocusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -33,53 +42,48 @@ class LoginBodyView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomTextFormField(
-                    textFieldModel: TextFieldModel(
-                      controller: emailController,
-                      labelText: "Email",
-                      hintText: "Enter your email",
-                      icon: Icons.email,
-                      obscureText: false,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) => Validatoin.emailValidation(value),
-                    ),
+                  LoginFormFields(
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    adminController: adminController,
+                    emailFocusNode: emailFocusNode,
+                    passwordFocusNode: passwordFocusNode,
+                    adminFocusNode: adminFocusNode,
                   ),
-                  const SizedBox(height: 20),
-                  CustomTextFormField(
-                    textFieldModel: TextFieldModel(
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: passwordController,
-                      labelText: "Password",
-                      hintText: "Enter your password",
-                      icon: Icons.lock,
-                      obscureText: true,
-                      validator: (value) => Validatoin.validatePassword(value),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorsTheme().primaryDark,
-                    ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Registering...")),
-                        );
-                      } else {
-                        context
-                            .read<AutovalidateModeCubit>()
-                            .changeAutovalidateMode();
-                      }
-                    },
-                    child: Text(
-                      "Register",
-                      style: TextStyle(
-                        color: ColorsTheme().whiteColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () =>
+                            context.push(Routes.forgotPasswordView),
+                        child: Text(
+                          "Forgot password?",
+                          style: AppTextStyles.styleBold16sp(context),
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                  LoginSubmitButton(
+                    formKey: _formKey,
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    adminController: adminController,
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Text(
+                        "Don't have an account? ",
+                        style: AppTextStyles.styleBold16sp(context),
+                      ),
+                      TextButton(
+                        onPressed: () => context.push(Routes.registerView),
+                        child: Text(
+                          "Sign Up",
+                          style: AppTextStyles.styleBold16sp(context),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -14,4 +14,5 @@ class Routes {
   static const String registerView = '/register';
   static const String loginView = '/login';
   static const String homeView = '/home';
+  static const String forgotPasswordView = '/forgot-password';
 }
