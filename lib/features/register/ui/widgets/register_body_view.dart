@@ -1,10 +1,14 @@
 import 'package:david_psalmist/core/model/text_field_model/text_field_model.dart';
+import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
+import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/core/validation/validatoin.dart';
 import 'package:david_psalmist/core/widgets/custom_text_form_field.dart';
 import 'package:david_psalmist/features/register/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
+import 'package:david_psalmist/features/register/manager/register_cubit/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterBodyView extends StatelessWidget {
   const RegisterBodyView({
@@ -73,29 +77,49 @@ class RegisterBodyView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorsTheme().primaryDark,
-                    ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Registering...")),
+                  BlocConsumer<RegisterCubit, RegisterState>(
+                    listener: (context, state) {
+                      if (state is RegisterSuccess) {
+                        context.push(Routes.loginView);
+                        showSuccessToast(
+                          context,
+                          'Success',
+                          'Register Process is Successful',
                         );
-                      } else {
-                        context
-                            .read<AutovalidateModeCubit>()
-                            .changeAutovalidateMode();
+                      }
+                      if (state is RegisterError) {
+                        showErrorToast(context, 'Error', state.message);
                       }
                     },
-                    child: Text(
-                      "Register",
-                      style: TextStyle(
-                        color: ColorsTheme().whiteColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    builder: (context, state) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorsTheme().primaryDark,
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            context
+                                .read<RegisterCubit>()
+                                .registerWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                          } else {
+                            context
+                                .read<AutovalidateModeCubit>()
+                                .changeAutovalidateMode();
+                          }
+                        },
+                        child: Text(
+                          "Register",
+                          style: TextStyle(
+                            color: ColorsTheme().whiteColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

@@ -1,4 +1,7 @@
+import 'package:david_psalmist/core/dependency_injection/set_up_dependencies.dart';
+import 'package:david_psalmist/features/register/data/repo/register_repo_impl.dart';
 import 'package:david_psalmist/features/register/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
+import 'package:david_psalmist/features/register/manager/register_cubit/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +42,12 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => AutovalidateModeCubit())],
+      providers: [
+        BlocProvider(create: (context) => AutovalidateModeCubit()),
+        BlocProvider(
+          create: (context) => RegisterCubit(getIt<RegisterRepoImpl>()),
+        ),
+      ],
 
       child: Scaffold(
         body: Stack(
