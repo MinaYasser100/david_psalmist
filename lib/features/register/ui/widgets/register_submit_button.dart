@@ -49,8 +49,8 @@ class RegisterSubmitButton extends StatelessWidget {
             if (formKey.currentState!.validate()) {
               FocusScope.of(context).unfocus();
               context.read<RegisterCubit>().registerWithEmailAndPassword(
-                email: emailController.text,
-                password: passwordController.text,
+                email: emailController.text.trim(),
+                password: passwordController.text.trim(),
               );
             } else {
               context.read<AutovalidateModeCubit>().changeAutovalidateMode();

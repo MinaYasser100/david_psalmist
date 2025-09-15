@@ -41,10 +41,10 @@ class LoginSubmitButton extends StatelessWidget {
           onPressed: () {
             if (formKey.currentState!.validate()) {
               FocusScope.of(context).unfocus();
-              if (adminController.text == "Jesus1741") {
+              if (adminController.text.trim() == "Jesus1741") {
                 context.read<LoginCubit>().loginWithEmailAndPassword(
-                  email: emailController.text,
-                  password: passwordController.text,
+                  email: emailController.text.trim(),
+                  password: passwordController.text.trim(),
                 );
               } else {
                 showErrorToast(context, 'Error', 'Admin Password is Incorrect');

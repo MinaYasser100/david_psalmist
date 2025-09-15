@@ -86,7 +86,7 @@ class RegisterFormFields extends StatelessWidget {
             hintText: "Re-enter your password",
             icon: Icons.lock_outline,
             obscureText: true,
-            validator: (value) => value != passwordController.text
+            validator: (value) => value != passwordController.text.trim()
                 ? "Passwords do not match"
                 : null,
             focusNode: confirmPasswordFocusNode,
