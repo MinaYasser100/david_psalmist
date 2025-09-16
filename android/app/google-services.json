@@ -12,7 +12,20 @@
           "package_name": "com.example.david_psalmist"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "964526770624-5i8g7kajqbuto8r19f5dfmuio75pdf5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.david_psalmist",
+            "certificate_hash": "ee5f904c584ffbe5a2b6abf4467fe98789d96f86"
+          }
+        },
+        {
+          "client_id": "964526770624-h5ab97hhv2js98mn2csi0qd2e9u2lrg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAAE_kteJ5uhlqXpnWJ6CTkz-StsrQFfTg"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964526770624-h5ab97hhv2js98mn2csi0qd2e9u2lrg7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "964526770624-n1vctc7bnv5alemgooreqq0ltotkeh9f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.davidPsalmist"
+              }
+            }
+          ]
         }
       }
     }

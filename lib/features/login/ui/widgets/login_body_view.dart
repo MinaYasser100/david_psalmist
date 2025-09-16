@@ -1,6 +1,9 @@
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
+import 'package:david_psalmist/core/utils/colors.dart';
+import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/features/login/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
+import 'package:david_psalmist/features/login/manager/cubit/login_cubit.dart';
 import 'package:david_psalmist/features/login/ui/widgets/login_form_fields.dart';
 import 'package:david_psalmist/features/login/ui/widgets/login_submit_button.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +87,39 @@ class LoginBodyView extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+
+                  BlocConsumer<LoginCubit, LoginState>(
+                    listener: (context, state) {
+                      if (state is LoginError) {
+                        showErrorToast(context, 'Error', state.error);
+                      }
+                      if (state is LoginSuccess) {
+                        showSuccessToast(
+                          context,
+                          'Success',
+                          'Login Process is Successful',
+                        );
+                        context.go(Routes.homeView);
+                      }
+                    },
+                    builder: (context, state) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.blur_off_outlined,
+                              color: ColorsTheme().primaryColor,
+                            ),
+                            onPressed: () {
+                              FocusScope.of(context).unfocus();
+                              context.read<LoginCubit>().loginWithGoogle();
+                            },
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
