@@ -1,18 +1,38 @@
-// shared_pref_helper.dart
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefHelper {
-  final SharedPreferences _prefs;
+  // التهيئة المتأخرة للـ Singleton
+  static final SharedPrefHelper _instance = SharedPrefHelper._internal();
 
-  SharedPrefHelper._internal(this._prefs);
-
-  static Future<SharedPrefHelper> getInstance() async {
-    final prefs = await SharedPreferences.getInstance();
-    return SharedPrefHelper._internal(prefs);
+  // التهيئة الداخلية الخاصة
+  SharedPrefHelper._internal() {
+    // تهيئة SharedPreferences هنا أو اتركها للاستخدام الأول
+    _init();
   }
+
+  // الحصول على الـ Singleton instance
+  static SharedPrefHelper get instance => _instance;
+
+  late SharedPreferences _prefs; // متغير متأخر لـ SharedPreferences
+
+  // دالة تهيئة خاصة
+  Future<void> _init() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  // تأكد من تهيئة _prefs قبل الاستخدام
+  Future<void> ensureInitialized() async {
+    if (!_prefsInitialized()) {
+      await _init();
+    }
+  }
+
+  // التحقق مما إذا كان _prefs تم تهيئته
+  bool _prefsInitialized() => _prefs != null;
 
   // حفظ String
   Future<void> saveString(String key, String value) async {
+    await ensureInitialized();
     await _prefs.setString(key, value);
   }
 
@@ -23,6 +43,7 @@ class SharedPrefHelper {
 
   // حفظ int
   Future<void> saveInt(String key, int value) async {
+    await ensureInitialized();
     await _prefs.setInt(key, value);
   }
 
@@ -33,6 +54,7 @@ class SharedPrefHelper {
 
   // حفظ bool
   Future<void> saveBool(String key, bool value) async {
+    await ensureInitialized();
     await _prefs.setBool(key, value);
   }
 
@@ -43,6 +65,7 @@ class SharedPrefHelper {
 
   // حفظ double
   Future<void> saveDouble(String key, double value) async {
+    await ensureInitialized();
     await _prefs.setDouble(key, value);
   }
 
@@ -53,6 +76,7 @@ class SharedPrefHelper {
 
   // حفظ List<String>
   Future<void> saveStringList(String key, List<String> value) async {
+    await ensureInitialized();
     await _prefs.setStringList(key, value);
   }
 
@@ -63,6 +87,7 @@ class SharedPrefHelper {
 
   // حذف قيمة بناءً على المفتاح
   Future<void> remove(String key) async {
+    await ensureInitialized();
     await _prefs.remove(key);
   }
 
@@ -73,6 +98,7 @@ class SharedPrefHelper {
 
   // مسح كل البيانات
   Future<void> clearAll() async {
+    await ensureInitialized();
     await _prefs.clear();
   }
 }

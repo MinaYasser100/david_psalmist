@@ -8,23 +8,28 @@ class MainHelper {
     final firebaseUser = FirebaseAuth.instance.currentUser;
 
     // Get the SharedPreferences instance
-    final prefs = await SharedPrefHelper.getInstance();
-    final isLoginPref = prefs.getBool(ConstantVariable.isLogin) ?? false;
+    final isLoginPref =
+        SharedPrefHelper.instance.getBool(ConstantVariable.isLogin) ?? false;
 
     // If Firebase shows user is logged in but SharedPrefs doesn't, update SharedPrefs
     if (firebaseUser != null && !isLoginPref) {
-      await prefs.saveBool(ConstantVariable.isLogin, true);
-      await prefs.saveString(ConstantVariable.uId, firebaseUser.uid);
+      await SharedPrefHelper.instance.saveBool(ConstantVariable.isLogin, true);
       return true;
     }
 
     // If Firebase shows user is not logged in but SharedPrefs does, clear SharedPrefs
     if (firebaseUser == null && isLoginPref) {
-      await prefs.remove(ConstantVariable.isLogin);
-      await prefs.remove(ConstantVariable.uId);
+      await SharedPrefHelper.instance.remove(ConstantVariable.isLogin);
       return false;
     }
 
     return firebaseUser != null && isLoginPref;
+  }
+
+  static checkLogin() {
+    bool isLoginPref =
+        SharedPrefHelper.instance.getBool(ConstantVariable.isLogin) ?? false;
+
+    return isLoginPref;
   }
 }

@@ -27,7 +27,6 @@ class LoginRepoImpl implements LoginRepo {
         email: email,
         password: password,
       );
-      await _sharedPrefHelper.saveString(ConstantVariable.uId, user.user!.uid);
       await _sharedPrefHelper.saveBool(ConstantVariable.isLogin, true);
       return Right(user.user!);
     } on FirebaseAuthException catch (e) {
@@ -64,8 +63,6 @@ class LoginRepoImpl implements LoginRepo {
 
       final User? user = userCredential.user;
       if (user != null) {
-        // لو عندك sharedPref أو save UID
-        await _sharedPrefHelper.saveString(ConstantVariable.uId, user.uid);
         await _sharedPrefHelper.saveBool(ConstantVariable.isLogin, true);
         return Right(user);
       } else {

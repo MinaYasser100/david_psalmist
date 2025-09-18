@@ -9,10 +9,9 @@ import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
-    redirect: (context, state) async {
-      final firstScreen = await getFirstScreen();
-      return state.uri.toString() != firstScreen ? firstScreen : null;
-    },
+    initialLocation: MainHelper.checkLogin()
+        ? Routes.homeView
+        : Routes.loginView,
     routes: [
       // Register view
       GoRoute(
@@ -48,14 +47,6 @@ abstract class AppRouter {
   );
 }
 
-Future<String> getFirstScreen() async {
-  bool isLogin = await MainHelper.isLoginMethod();
-  if (isLogin) {
-    return Routes.homeView;
-  } else {
-    return Routes.loginView;
-  }
-}
 // Future<String> getFirstScreen() async {
 //   final isOnboardingSeen = OnboardingHive().isOnboardingSeen();
 //   if (!isOnboardingSeen) {

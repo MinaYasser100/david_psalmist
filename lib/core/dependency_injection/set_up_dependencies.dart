@@ -13,8 +13,7 @@ void setupDependencies() async {
     FirebaseAuthErrorHandling(),
   );
 
-  final sharedPrefHelper = await SharedPrefHelper.getInstance();
-  getIt.registerSingleton<SharedPrefHelper>(sharedPrefHelper);
+  getIt.registerSingleton<SharedPrefHelper>(SharedPrefHelper.instance);
 
   getIt.registerSingleton<FirebaseFirestoreErrorHandler>(
     FirebaseFirestoreErrorHandler(),

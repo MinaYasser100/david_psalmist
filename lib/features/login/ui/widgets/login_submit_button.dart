@@ -1,4 +1,5 @@
 import 'package:david_psalmist/core/routing/routes.dart';
+import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/features/login/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
@@ -34,32 +35,35 @@ class LoginSubmitButton extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: ColorsTheme().primaryDark,
-          ),
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              FocusScope.of(context).unfocus();
-              if (adminController.text.trim() == "Jesus1741") {
-                context.read<LoginCubit>().loginWithEmailAndPassword(
-                  email: emailController.text.trim(),
-                  password: passwordController.text.trim(),
-                );
-              } else {
-                showErrorToast(context, 'Error', 'Admin Password is Incorrect');
-              }
-            } else {
-              context.read<AutovalidateModeCubit>().changeAutovalidateMode();
-            }
-          },
-          child: Text(
-            "Login",
-            style: TextStyle(
-              color: ColorsTheme().whiteColor,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+        return Container(
+          height: 50,
+          width: double.infinity,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ColorsTheme().primaryDark,
+              padding: const EdgeInsets.all(0),
             ),
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                FocusScope.of(context).unfocus();
+                if (adminController.text.trim() == "Jesus1741") {
+                  context.read<LoginCubit>().loginWithEmailAndPassword(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                } else {
+                  showErrorToast(
+                    context,
+                    'Error',
+                    'Admin Password is Incorrect',
+                  );
+                }
+              } else {
+                context.read<AutovalidateModeCubit>().changeAutovalidateMode();
+              }
+            },
+            child: Text("Login", style: AppTextStyles.styleBold20sp(context)),
           ),
         );
       },
