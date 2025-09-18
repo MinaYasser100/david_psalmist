@@ -22,18 +22,26 @@ class _RegisterViewState extends State<RegisterView> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
   late FocusNode emailFocusNode;
   late FocusNode passwordFocusNode;
   late FocusNode confirmPasswordFocusNode;
+  late FocusNode firstNameFocusNode;
+  late FocusNode lastNameFocusNode;
 
   @override
   void initState() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
     emailFocusNode = FocusNode();
     passwordFocusNode = FocusNode();
     confirmPasswordFocusNode = FocusNode();
+    firstNameFocusNode = FocusNode();
+    lastNameFocusNode = FocusNode();
     super.initState();
   }
 
@@ -42,6 +50,13 @@ class _RegisterViewState extends State<RegisterView> {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    confirmPasswordFocusNode.dispose();
+    firstNameFocusNode.dispose();
+    lastNameFocusNode.dispose();
     super.dispose();
   }
 
@@ -112,6 +127,10 @@ class _RegisterViewState extends State<RegisterView> {
               emailFocusNode: emailFocusNode,
               passwordFocusNode: passwordFocusNode,
               confirmPasswordFocusNode: confirmPasswordFocusNode,
+              firstNameController: firstNameController,
+              lastNameController: lastNameController,
+              firstNameFocusNode: firstNameFocusNode,
+              lastNameFocusNode: lastNameFocusNode,
             ),
           ],
         ),

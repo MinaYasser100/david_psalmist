@@ -7,4 +7,5 @@ const desktopDesignSize = Size(1440, 900);
 class ConstantVariable {
   static const String uId = 'uId';
   static const String isLogin = 'isLogin';
+  static const String users = 'Users';
 }

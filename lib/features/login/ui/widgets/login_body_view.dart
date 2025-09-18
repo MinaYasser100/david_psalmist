@@ -2,10 +2,12 @@ import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
+import 'package:david_psalmist/features/forgot_password/ui/forgot_password_view.dart';
 import 'package:david_psalmist/features/login/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
 import 'package:david_psalmist/features/login/manager/cubit/login_cubit.dart';
 import 'package:david_psalmist/features/login/ui/widgets/login_form_fields.dart';
 import 'package:david_psalmist/features/login/ui/widgets/login_submit_button.dart';
+import 'package:david_psalmist/features/register/ui/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -57,8 +59,15 @@ class LoginBodyView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: () =>
-                            context.push(Routes.forgotPasswordView),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ForgotPasswordView(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Forgot password?",
                           style: AppTextStyles.styleBold16sp(context),
@@ -80,7 +89,15 @@ class LoginBodyView extends StatelessWidget {
                         style: AppTextStyles.styleBold16sp(context),
                       ),
                       TextButton(
-                        onPressed: () => context.push(Routes.registerView),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterView(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Sign Up",
                           style: AppTextStyles.styleBold16sp(context),
