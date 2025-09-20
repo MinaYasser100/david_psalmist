@@ -1,3 +1,4 @@
+import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../theme/app_style.dart';
@@ -25,38 +26,58 @@ class CustomAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: ColorsTheme().primaryColor,
       title: Text(
         title,
-        style:
-            AppTextStyles.styleMedium16sp(context).copyWith(color: Colors.red),
+        style: AppTextStyles.styleMedium24sp(
+          context,
+        ).copyWith(color: ColorsTheme().whiteColor),
       ),
       content: Text(
         content,
-        style: AppTextStyles.styleRegular20sp(context)
-            .copyWith(color: Colors.black),
+        style: AppTextStyles.styleRegular18sp(
+          context,
+        ).copyWith(color: ColorsTheme().whiteColor),
       ),
-      backgroundColor: Colors.white,
+
       actions: [
-        TextButton(
-          onPressed: onNegativeButtonPressed,
-          child: Text(
-            nameOfNegativeButton,
-            style: AppTextStyles.styleMedium14sp(context)
-                .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+        Container(
+          color: ColorsTheme().primaryColor,
+          child: TextButton(
+            style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: ColorsTheme().primaryLight, width: 2),
+              ),
+              backgroundColor: ColorsTheme().whiteColor,
+            ),
+            onPressed: onNegativeButtonPressed,
+            child: Text(
+              nameOfNegativeButton,
+              style: AppTextStyles.styleBold18sp(
+                context,
+              ).copyWith(color: ColorsTheme().primaryColor),
+            ),
           ),
         ),
         TextButton(
+          style: TextButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(color: ColorsTheme().primaryLight, width: 2),
+            ),
+            backgroundColor: ColorsTheme().whiteColor,
+          ),
           onPressed: onPositiveButtonPressed,
           child: isLoading!
               ? const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
+                  child: CircularProgressIndicator(color: Colors.white),
                 )
               : Text(
                   nameOfPositiveButton,
-                  style: AppTextStyles.styleRegular20sp(context)
-                      .copyWith(color: Colors.red, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.styleBold18sp(
+                    context,
+                  ).copyWith(color: ColorsTheme().primaryColor),
                 ),
         ),
       ],
