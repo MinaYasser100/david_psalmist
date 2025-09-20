@@ -1,6 +1,7 @@
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/features/login/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
+import 'package:david_psalmist/features/login/ui/widgets/custom_facebook_login_bloc.dart';
 import 'package:david_psalmist/features/login/ui/widgets/login_form_fields.dart';
 import 'package:david_psalmist/features/login/ui/widgets/login_submit_button.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,8 @@ class LoginBodyView extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   CustomGoogleLoginBloc(),
-
+                  const SizedBox(height: 16),
+                  CustomFaceBookLoginBloc(),
                   const SizedBox(height: 16),
                   CustomDontAccount(),
                 ],

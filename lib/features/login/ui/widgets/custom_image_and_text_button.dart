@@ -28,7 +28,11 @@ class CustomImageAndTextButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(radius: 20, backgroundImage: AssetImage(image)),
+            CircleAvatar(
+              radius: 20,
+              backgroundImage: AssetImage(image),
+              backgroundColor: ColorsTheme().cardColor,
+            ),
             SizedBox(width: 10),
             Flexible(
               child: Text(text, style: AppTextStyles.styleBold16sp(context)),
