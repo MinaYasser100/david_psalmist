@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 ThemeData themeDataFunc() {
   return ThemeData(
     scaffoldBackgroundColor: ColorsTheme().whiteColor,
-    primaryColor: ColorsTheme().primaryColor,
+    primaryColor: ColorsTheme().primaryDark,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: ColorsTheme().primaryColor,
+      seedColor: ColorsTheme().primaryDark,
       brightness: Brightness.light,
       onPrimary: ColorsTheme().whiteColor,
       secondary: ColorsTheme().secondaryColor,

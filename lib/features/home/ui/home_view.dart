@@ -3,6 +3,7 @@ import 'package:david_psalmist/core/model/user_model/user_model.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/constant.dart';
 import 'package:david_psalmist/core/widgets/custom_alert_dialoge.dart';
+import 'package:david_psalmist/features/home/ui/widgets/home_body_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -24,7 +25,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hi ${userModel?.firstName}...'),
+        title: Text('Welcome ${userModel?.firstName}...'),
         centerTitle: false,
         actions: [
           IconButton(
@@ -47,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-      body: const Center(child: Text('Welcome to the Home View!')),
+      body: const HomeBodyView(),
     );
   }
 }
