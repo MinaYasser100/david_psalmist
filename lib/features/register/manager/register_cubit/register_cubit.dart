@@ -22,6 +22,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       email: email,
       password: password,
     );
+
     user.fold(
       (error) {
         log(error.toString());

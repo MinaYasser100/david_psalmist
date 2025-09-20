@@ -29,6 +29,7 @@ class RegisterRepoImpl implements RegisterRepo {
         email: email,
         password: password,
       );
+      userCredential.user!.sendEmailVerification();
       return Right(userCredential.user!);
     } on FirebaseAuthException catch (e) {
       return Left(errorHandling.mapFirebaseAuthException(e));

@@ -5,6 +5,7 @@ import 'package:david_psalmist/features/forgot_password/ui/forgot_password_view.
 import 'package:david_psalmist/features/home/ui/home_view.dart';
 import 'package:david_psalmist/features/login/ui/login_view.dart';
 import 'package:david_psalmist/features/register/ui/register_view.dart';
+import 'package:david_psalmist/features/verfiy_email/ui/verify_email_view.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
@@ -34,7 +35,11 @@ abstract class AppRouter {
         pageBuilder: (context, state) =>
             fadeTransitionPage(ForgotPasswordView()),
       ),
-
+      // Verify Email
+      GoRoute(
+        path: Routes.verifyEmailView,
+        pageBuilder: (context, state) => fadeTransitionPage(VerifyEmailView()),
+      ),
       // GoRoute(
       //   path: Routes.productDetails,
       //   pageBuilder: (context, state) {

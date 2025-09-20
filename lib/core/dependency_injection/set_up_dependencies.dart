@@ -5,6 +5,7 @@ import 'package:david_psalmist/core/firebase/firebase_firestore_error_handler.da
 import 'package:david_psalmist/features/forgot_password/data/repo/forgot_password_repo_impl.dart';
 import 'package:david_psalmist/features/login/data/repo/login_repo_impl.dart';
 import 'package:david_psalmist/features/register/data/repo/register_repo_impl.dart';
+import 'package:david_psalmist/features/verfiy_email/data/repo/verify_email_repo_impl.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -40,6 +41,10 @@ void setupDependencies() async {
 
   getIt.registerSingleton<ForgotPasswordRepoImpl>(
     ForgotPasswordRepoImpl(getIt<FirebaseAuthErrorHandling>()),
+  );
+
+  getIt.registerSingleton<VerifyEmailRepoImpl>(
+    VerifyEmailRepoImpl(errorHandling: getIt<FirebaseAuthErrorHandling>()),
   );
 
   // // register connectivity cubit for internet

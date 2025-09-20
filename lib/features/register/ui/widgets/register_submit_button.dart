@@ -1,8 +1,8 @@
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
-import 'package:david_psalmist/features/login/ui/login_view.dart';
 import 'package:david_psalmist/features/register/manager/autovalidate_mode/autovalidate_mode_cubit.dart';
 import 'package:david_psalmist/features/register/manager/register_cubit/register_cubit.dart';
+import 'package:david_psalmist/features/verfiy_email/ui/verify_email_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,7 +31,7 @@ class RegisterSubmitButton extends StatelessWidget {
         if (state is RegisterSuccess) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const LoginView()),
+            MaterialPageRoute(builder: (context) => const VerifyEmailView()),
           );
           showSuccessToast(
             context,
