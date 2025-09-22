@@ -68,14 +68,32 @@ class LoginRepoImpl implements LoginRepo {
         accessToken: googleAuth.accessToken,
       );
 
-      final UserCredential userCredential = await _auth.signInWithCredential(
-        credential,
-      );
+      final User? currentUser = _auth.currentUser; // التحقق من المستخدم الحالي
+      UserCredential? userCredential;
 
-      final User? user = userCredential.user;
+      if (currentUser != null) {
+        // حالة ربط الحساب (link) إذا كان مسجل بطريقة تانية
+        try {
+          userCredential = await currentUser.linkWithCredential(credential);
+        } on FirebaseAuthException catch (linkError) {
+          if (linkError.code == 'provider-already-linked') {
+            // لو كان Google متربط بالفعل، نستخدم الحساب الحالي مباشرة
+            userCredential = null; // ما نحتاجش UserCredential جديد
+          } else {
+            return Left(linkError.message ?? 'Failed to link Google account');
+          }
+        }
+      } else {
+        // حالة تسجيل دخول جديد
+        userCredential = await _auth.signInWithCredential(credential);
+      }
+
+      final User? user =
+          userCredential?.user ??
+          currentUser; // نختار المستخدم بناءً على الحالة
       if (user != null) {
         await _sharedPrefHelper.saveBool(ConstantVariable.isLogin, true);
-        await _registerAndSaveUserGoogleInfo(user);
+        await _registerAndSaveUserGoogleInfo(user); // حفظ البيانات
         return Right(user);
       } else {
         return const Left('Google Sign-In failed: User is null');
