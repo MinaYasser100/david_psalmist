@@ -9,6 +9,7 @@ part 'level_state.dart';
 class LevelCubit extends Cubit<LevelState> {
   LevelCubit(this._levelRepo) : super(LevelInitial());
   final LevelRepo _levelRepo;
+  List<LevelModel> levels = <LevelModel>[];
 
   Future<void> addLevel(String levelName) async {
     emit(LevelLoading());
@@ -21,6 +22,19 @@ class LevelCubit extends Cubit<LevelState> {
   Future<void> deleteLevel({required String levelId}) async {
     emit(LevelLoading());
     final result = await _levelRepo.deleteLevel(levelId: levelId);
-    result.fold((l) => emit(LevelError(l)), (r) => emit(LevelLoaded()));
+    result.fold((l) => emit(LevelError(l)), (r) => emit(LevelDeleted()));
+  }
+
+  void streamGetLevels() {
+    emit(LevelGetAllLevelsLoading());
+    _levelRepo.getLevels().listen(
+      (levels) {
+        this.levels = levels;
+        emit(LevelGetAllLevelsSuccess(levels));
+      },
+      onError: (error) {
+        emit(LevelGetAllLevelsError(error.toString()));
+      },
+    );
   }
 }

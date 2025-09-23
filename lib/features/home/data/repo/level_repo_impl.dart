@@ -46,4 +46,33 @@ class LevelRepoImpl implements LevelRepo {
       return const Left('Failed to delete level');
     }
   }
+
+  @override
+  Stream<List<LevelModel>> getLevels() {
+    return _firestore
+        .collection(ConstantVariable.levelsCollection)
+        .snapshots()
+        .map((querySnapshot) {
+          return querySnapshot.docs.map((doc) {
+            final data = doc.data();
+            return LevelModel(id: doc.id, name: data['name']);
+          }).toList();
+        });
+  }
 }
+
+// Future<Either<String, List<LevelModel>>> getLevels() async {
+//   try {
+//     return _firestore.collection(ConstantVariable.levelsCollection).get().then((
+//       querySnapshot,
+//     ) {
+//       final levels = querySnapshot.docs.map((doc) {
+//         final data = doc.data();
+//         return LevelModel(id: doc.id, name: data['name']);
+//       }).toList();
+//       return Right(levels);
+//     });
+//   } on FirebaseException catch (e) {
+//     return Left(firebaseFirestoreErrorHandler.mapFirebaseFirestoreException(e));
+//   }
+// }
