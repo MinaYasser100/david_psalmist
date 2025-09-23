@@ -3,6 +3,7 @@ import 'package:david_psalmist/core/caching/shared/shared_perf_helper.dart';
 import 'package:david_psalmist/core/firebase/firebase_auth_error_handling.dart';
 import 'package:david_psalmist/core/firebase/firebase_firestore_error_handler.dart';
 import 'package:david_psalmist/features/forgot_password/data/repo/forgot_password_repo_impl.dart';
+import 'package:david_psalmist/features/home/data/repo/level_repo_impl.dart';
 import 'package:david_psalmist/features/login/data/repo/login_repo_impl.dart';
 import 'package:david_psalmist/features/register/data/repo/register_repo_impl.dart';
 import 'package:david_psalmist/features/verfiy_email/data/repo/verify_email_repo_impl.dart';
@@ -45,6 +46,10 @@ void setupDependencies() async {
 
   getIt.registerSingleton<VerifyEmailRepoImpl>(
     VerifyEmailRepoImpl(errorHandling: getIt<FirebaseAuthErrorHandling>()),
+  );
+
+  getIt.registerSingleton<LevelRepoImpl>(
+    LevelRepoImpl(getIt<FirebaseFirestoreErrorHandler>()),
   );
 
   // // register connectivity cubit for internet
