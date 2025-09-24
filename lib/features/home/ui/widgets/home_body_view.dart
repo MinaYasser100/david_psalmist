@@ -4,6 +4,8 @@ import 'package:david_psalmist/features/home/manager/level_cubit/level_cubit.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'custom_no_levels_widget.dart';
+import 'custom_sliver_levels_list.dart';
 import 'home_header_bar.dart';
 
 class HomeBodyView extends StatefulWidget {
@@ -42,64 +44,21 @@ class _HomeBodyViewState extends State<HomeBodyView> {
             builder: (context, state) {
               if (state is LevelGetAllLevelsError) {
                 return SliverFillRemaining(
-                  child: Center(child: Text(state.error)),
-                );
-              } else if (state is LevelGetAllLevelsSuccess &&
-                  context.read<LevelCubit>().levels.isEmpty) {
-                return SliverFillRemaining(
                   child: Center(
                     child: Text(
-                      'No levels found, add new level',
+                      state.error,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.styleBold24sp(
-                        context,
-                      ).copyWith(color: ColorsTheme().grayWhite),
+                      style: AppTextStyles.styleBold24sp(context),
                     ),
                   ),
                 );
+              } else if (state is LevelGetAllLevelsSuccess &&
+                  context.read<LevelCubit>().levels.isEmpty) {
+                return CustomNoLevelsWidget();
               } else {
                 {
                   final levels = context.read<LevelCubit>().levels;
-                  return SliverList.builder(
-                    itemCount: levels.length,
-                    itemBuilder: (context, index) {
-                      final level = levels[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: ColorsTheme().primaryDark,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(0),
-                            textColor: ColorsTheme().whiteColor,
-                            leading: CircleAvatar(
-                              radius: 18,
-                              backgroundColor: ColorsTheme().secondaryColor,
-                              child: Text(
-                                '${index + 1}',
-                                style: AppTextStyles.styleBold24sp(
-                                  context,
-                                ).copyWith(color: ColorsTheme().whiteColor),
-                              ),
-                            ),
-                            title: Text(
-                              level.name,
-                              style: AppTextStyles.styleBold24sp(context),
-                            ),
-                            trailing: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color: ColorsTheme().whiteColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
+                  return CustomSliverLevelsList(levels: levels);
                 }
               }
             },
