@@ -16,4 +16,5 @@ class Routes {
   static const String homeView = '/home';
   static const String forgotPasswordView = '/forgot-password';
   static const String verifyEmailView = '/verify-email';
+  static const String classesView = '/classes';
 }

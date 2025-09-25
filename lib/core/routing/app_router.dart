@@ -1,7 +1,9 @@
 import 'package:david_psalmist/core/routing/animation_route.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/main_helper.dart';
+import 'package:david_psalmist/features/classes/ui/classes_view.dart';
 import 'package:david_psalmist/features/forgot_password/ui/forgot_password_view.dart';
+import 'package:david_psalmist/features/home/data/model/level_model.dart';
 import 'package:david_psalmist/features/home/ui/home_view.dart';
 import 'package:david_psalmist/features/login/ui/login_view.dart';
 import 'package:david_psalmist/features/register/ui/register_view.dart';
@@ -40,14 +42,15 @@ abstract class AppRouter {
         path: Routes.verifyEmailView,
         pageBuilder: (context, state) => fadeTransitionPage(VerifyEmailView()),
       ),
-      // GoRoute(
-      //   path: Routes.productDetails,
-      //   pageBuilder: (context, state) {
-      //     final product = state.extra as Product?;
-      //     if (product == null) throw Exception('Product not found');
-      //     return fadeTransitionPage(ProductDetailsView(product: product));
-      //   },
-      // ),
+
+      GoRoute(
+        path: Routes.classesView,
+        pageBuilder: (context, state) {
+          final level = state.extra as LevelModel?;
+          if (level == null) throw Exception('Level is not found');
+          return fadeTransitionPage(ClassesView(level: level));
+        },
+      ),
     ],
   );
 }

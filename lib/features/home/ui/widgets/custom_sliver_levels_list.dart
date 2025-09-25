@@ -1,3 +1,4 @@
+import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/core/widgets/custom_alert_dialoge.dart';
@@ -5,6 +6,7 @@ import 'package:david_psalmist/features/home/data/model/level_model.dart';
 import 'package:david_psalmist/features/home/manager/level_cubit/level_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'custom_level_item_view.dart';
 
@@ -52,20 +54,22 @@ class CustomSliverLevelsList extends StatelessWidget {
             },
             onDismissed: (direction) {
               final cubit = context.read<LevelCubit>();
-
               // اشيله من الليست الأول
               cubit.levels.removeWhere((l) => l.id == level.id);
-
               // بعدين احذف من Firebase أو غيره
               cubit.deleteLevel(levelId: level.id);
-
               showSuccessToast(
                 context,
                 'Success',
                 'Level deleted successfully',
               );
             },
-            child: CustomLevelItemView(level: level, index: index),
+            child: GestureDetector(
+              onTap: () {
+                context.push(Routes.classesView, extra: level);
+              },
+              child: CustomLevelItemView(level: level, index: index),
+            ),
           ),
         );
       },

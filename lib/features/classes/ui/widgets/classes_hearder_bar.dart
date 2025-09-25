@@ -3,19 +3,18 @@ import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/core/widgets/custom_button.dart';
 import 'package:david_psalmist/features/home/manager/level_cubit/level_cubit.dart';
+import 'package:david_psalmist/features/home/ui/widgets/custom_add_new_level.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'custom_add_new_level.dart';
-
-class HomeHeaderBar extends StatefulWidget {
-  const HomeHeaderBar({super.key});
+class ClassesHeaderBar extends StatefulWidget {
+  const ClassesHeaderBar({super.key});
 
   @override
-  State<HomeHeaderBar> createState() => _HomeHeaderBarState();
+  State<ClassesHeaderBar> createState() => _ClassesHeaderBarState();
 }
 
-class _HomeHeaderBarState extends State<HomeHeaderBar> {
+class _ClassesHeaderBarState extends State<ClassesHeaderBar> {
   late TextEditingController _controller;
   late FocusNode _focusNode;
 
@@ -36,10 +35,9 @@ class _HomeHeaderBarState extends State<HomeHeaderBar> {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      automaticallyImplyLeading: false,
-      floating: false,
       expandedHeight: 70.0,
       backgroundColor: ColorsTheme().whiteColor,
+      automaticallyImplyLeading: false,
       flexibleSpace: FlexibleSpaceBar(
         background: Card(
           elevation: 2,
@@ -59,7 +57,7 @@ class _HomeHeaderBarState extends State<HomeHeaderBar> {
                         Icon(Icons.layers, color: ColorsTheme().primaryDark),
                         const SizedBox(width: 8),
                         Text(
-                          'Add a new Level',
+                          'Add a new class',
                           style: AppTextStyles.styleBold18sp(
                             context,
                           ).copyWith(color: Colors.black87),
@@ -89,10 +87,10 @@ class _HomeHeaderBarState extends State<HomeHeaderBar> {
                               builder: (context) => CustomAddNewItem(
                                 nameLevelController: _controller,
                                 nameLevelFocusNode: _focusNode,
-                                title: 'Add a new Level',
+                                title: 'Add a new class',
                                 nameOfNegativeButton: 'Cancel',
                                 nameOfPositiveButton: 'Add',
-                                labelText: 'Name of Level',
+                                labelText: 'Name of class',
                                 onNegativeButtonPressed: () =>
                                     Navigator.pop(context),
                                 onPositiveButtonPressed: () {
@@ -104,9 +102,7 @@ class _HomeHeaderBarState extends State<HomeHeaderBar> {
                                       'Please enter a name',
                                     );
                                   } else {
-                                    context.read<LevelCubit>().addLevel(
-                                      _controller.text.trim(),
-                                    );
+                                    // Add the new level using the cubit
                                     _controller.clear();
                                     _focusNode.unfocus();
                                     Navigator.pop(context);

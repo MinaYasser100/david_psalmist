@@ -4,8 +4,8 @@ import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class CustomAddNewLevel extends StatelessWidget {
-  const CustomAddNewLevel({
+class CustomAddNewItem extends StatelessWidget {
+  const CustomAddNewItem({
     super.key,
     required this.title,
     this.onNegativeButtonPressed,
@@ -14,13 +14,14 @@ class CustomAddNewLevel extends StatelessWidget {
     required this.nameOfPositiveButton,
     required this.nameLevelController,
     required this.nameLevelFocusNode,
+    required this.labelText,
   });
   final String title;
   final void Function()? onNegativeButtonPressed;
   final void Function()? onPositiveButtonPressed;
   final String nameOfNegativeButton;
   final String nameOfPositiveButton;
-
+  final String labelText;
   final TextEditingController nameLevelController;
   final FocusNode nameLevelFocusNode;
 
@@ -40,7 +41,7 @@ class CustomAddNewLevel extends StatelessWidget {
           CustomTextFormField(
             textFieldModel: TextFieldModel(
               controller: nameLevelController,
-              labelText: "Name of Level",
+              labelText: labelText,
               hintText: "Enter your name",
               icon: Icons.layers_rounded,
               keyboardType: TextInputType.text,
