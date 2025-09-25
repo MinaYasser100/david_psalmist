@@ -18,7 +18,7 @@ class HomeBodyView extends StatefulWidget {
 class _HomeBodyViewState extends State<HomeBodyView> {
   @override
   void initState() {
-    context.read<LevelCubit>().streamGetLevels();
+    context.read<LevelCubit>().getLevels();
     super.initState();
   }
 

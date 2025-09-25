@@ -25,7 +25,7 @@ class LevelCubit extends Cubit<LevelState> {
     result.fold((l) => emit(LevelError(l)), (r) => emit(LevelDeleted()));
   }
 
-  void streamGetLevels() {
+  void getLevels() {
     emit(LevelGetAllLevelsLoading());
     _levelRepo.getLevels().listen(
       (levels) {
