@@ -10,4 +10,5 @@ class ConstantVariable {
   static const String users = 'Users';
   static const String userBox = 'userBox';
   static const String levelsCollection = 'Levels';
+  static const String classesCollection = 'Classes';
 }
