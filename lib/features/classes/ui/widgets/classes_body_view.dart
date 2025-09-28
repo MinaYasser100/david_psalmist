@@ -1,18 +1,82 @@
+import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
 import 'package:david_psalmist/features/classes/ui/widgets/classes_hearder_bar.dart';
+import 'package:david_psalmist/features/classes/ui/widgets/class_list_item.dart';
 import 'package:david_psalmist/features/home/data/model/level_model.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ClassesBodyView extends StatelessWidget {
+class ClassesBodyView extends StatefulWidget {
   const ClassesBodyView({super.key, required this.level});
   final LevelModel level;
+
+  @override
+  State<ClassesBodyView> createState() => _ClassesBodyViewState();
+}
+
+class _ClassesBodyViewState extends State<ClassesBodyView> {
+  @override
+  void initState() {
+    context.read<ClassesCubit>().getClasses(levelId: widget.level.id);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: CustomScrollView(
         slivers: [
-          ClassesHeaderBar(levelId: level.id),
-          SliverList.builder(itemBuilder: (context, index) {}, itemCount: 10),
+          ClassesHeaderBar(levelId: widget.level.id),
+
+          BlocBuilder<ClassesCubit, ClassesState>(
+            builder: (context, state) {
+              if (state is ClassLoading) {
+                return const SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              if (state is ClassError) {
+                return SliverFillRemaining(
+                  child: Center(child: Text(state.message)),
+                );
+              }
+
+              if (state is GetAllClassesSuccess) {
+                final classes = state.classes;
+                if (classes.isEmpty) {
+                  return const SliverFillRemaining(
+                    child: Center(child: Text('No classes yet')),
+                  );
+                }
+
+                return SliverList.builder(
+                  itemCount: classes.length,
+                  itemBuilder: (context, index) {
+                    final classModel = classes[index];
+                    return ClassListItem(classModel: classModel);
+                  },
+                );
+              }
+
+              // default - safe fallback
+              final classes = context.read<ClassesCubit>().classes;
+              if (classes.isEmpty) {
+                return const SliverFillRemaining(
+                  child: Center(child: Text('No classes yet')),
+                );
+              }
+
+              return SliverList.builder(
+                itemCount: classes.length,
+                itemBuilder: (context, index) {
+                  final classModel = classes[index];
+                  return ClassListItem(classModel: classModel);
+                },
+              );
+            },
+          ),
         ],
       ),
     );

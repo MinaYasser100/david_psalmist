@@ -8,6 +8,7 @@ part 'class_state.dart';
 class ClassesCubit extends Cubit<ClassesState> {
   ClassesCubit(this._classesRepo) : super(ClassInitial());
   final ClassesRepo _classesRepo;
+  List<ClassModel> classes = <ClassModel>[];
 
   Future<void> addClass({required ClassModel classModel}) async {
     emit(ClassLoading());
@@ -42,6 +43,7 @@ class ClassesCubit extends Cubit<ClassesState> {
         .getClasses(levelId: levelId)
         .listen(
           (classes) {
+            this.classes = classes;
             emit(GetAllClassesSuccess(classes: classes));
           },
           onError: (error) {
