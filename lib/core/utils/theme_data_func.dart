@@ -22,7 +22,7 @@ ThemeData themeDataFunc() {
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: ColorsTheme().primaryColor,
+      backgroundColor: ColorsTheme().primaryDark,
       foregroundColor: ColorsTheme().whiteColor,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

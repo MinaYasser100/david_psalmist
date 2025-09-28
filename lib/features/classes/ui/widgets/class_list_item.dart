@@ -1,3 +1,4 @@
+import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/core/widgets/custom_alert_dialoge.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
@@ -6,14 +7,14 @@ import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'update_class_button.dart';
 
 class ClassListItem extends StatelessWidget {
-  const ClassListItem({super.key, required this.classModel, this.onTap});
+  const ClassListItem({super.key, required this.classModel});
 
   final ClassModel classModel;
-  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,9 @@ class ClassListItem extends StatelessWidget {
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
-            onTap: onTap,
+            onTap: () {
+              context.push(Routes.classView, extra: classModel);
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,

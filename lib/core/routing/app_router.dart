@@ -1,6 +1,8 @@
 import 'package:david_psalmist/core/routing/animation_route.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/main_helper.dart';
+import 'package:david_psalmist/features/class_view/ui/class_view.dart';
+import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:david_psalmist/features/classes/ui/classes_view.dart';
 import 'package:david_psalmist/features/forgot_password/ui/forgot_password_view.dart';
 import 'package:david_psalmist/features/home/data/model/level_model.dart';
@@ -49,6 +51,15 @@ abstract class AppRouter {
           final level = state.extra as LevelModel?;
           if (level == null) throw Exception('Level is not found');
           return fadeTransitionPage(ClassesView(level: level));
+        },
+      ),
+
+      GoRoute(
+        path: Routes.classView,
+        pageBuilder: (context, state) {
+          final classModel = state.extra as ClassModel?;
+          if (classModel == null) throw Exception('class is not found');
+          return fadeTransitionPage(ClassView(classModel: classModel));
         },
       ),
     ],
