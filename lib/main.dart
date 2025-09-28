@@ -2,6 +2,8 @@ import 'package:david_psalmist/core/caching/hive/user_hive_helper.dart';
 import 'package:david_psalmist/core/dependency_injection/set_up_dependencies.dart';
 import 'package:david_psalmist/core/routing/app_router.dart';
 import 'package:david_psalmist/core/utils/theme_data_func.dart';
+import 'package:david_psalmist/features/classes/data/repo/classes_repo_impl.dart';
+import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
 import 'package:david_psalmist/features/home/data/repo/level_repo_impl.dart';
 import 'package:david_psalmist/features/home/manager/level_cubit/level_cubit.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +23,13 @@ void main() async {
 
   await UserHiveHelper.init();
   runApp(
-    BlocProvider(
-      create: (context) => LevelCubit(getIt<LevelRepoImpl>()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => LevelCubit(getIt<LevelRepoImpl>())),
+        BlocProvider(
+          create: (context) => ClassesCubit(getIt<ClassesRepoImpl>()),
+        ),
+      ],
       child: const MyApp(),
     ),
   );

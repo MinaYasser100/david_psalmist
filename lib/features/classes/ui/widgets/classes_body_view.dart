@@ -11,7 +11,7 @@ class ClassesBodyView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: CustomScrollView(
         slivers: [
-          ClassesHeaderBar(),
+          ClassesHeaderBar(levelId: level.id),
           SliverList.builder(itemBuilder: (context, index) {}, itemCount: 10),
         ],
       ),

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'class_state.dart';
 
-class ClassesCubit extends Cubit<ClassState> {
+class ClassesCubit extends Cubit<ClassesState> {
   ClassesCubit(this._classesRepo) : super(ClassInitial());
   final ClassesRepo _classesRepo;
 
