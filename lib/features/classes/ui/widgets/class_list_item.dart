@@ -7,6 +7,8 @@ import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'update_class_button.dart';
+
 class ClassListItem extends StatelessWidget {
   const ClassListItem({super.key, required this.classModel, this.onTap});
 
@@ -16,6 +18,7 @@ class ClassListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = ColorsTheme();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 6.0),
       child: Dismissible(
@@ -47,9 +50,9 @@ class ClassListItem extends StatelessWidget {
         },
         onDismissed: (direction) {
           final cubit = context.read<ClassesCubit>();
-          // اشيله من الليست الأول
+          // remove from local list first
           cubit.classes.removeWhere((c) => c.id == classModel.id);
-          // بعدين احذف من Firebase أو غيره
+          // then delete from remote
           cubit.deleteClass(classModel: classModel);
           showSuccessToast(context, 'Success', 'Level deleted successfully');
         },
@@ -86,6 +89,7 @@ class ClassListItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  UpdateClassButton(classModel: classModel),
                 ],
               ),
             ),

@@ -1,5 +1,7 @@
+import 'package:david_psalmist/core/utils/show_top_toast.dart';
+import 'package:david_psalmist/core/widgets/custom_animated_text_kit.dart';
 import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
-import 'package:david_psalmist/features/classes/ui/widgets/classes_hearder_bar.dart';
+import 'package:david_psalmist/features/classes/ui/widgets/classes_header_bar.dart';
 import 'package:david_psalmist/features/classes/ui/widgets/class_list_item.dart';
 import 'package:david_psalmist/features/home/data/model/level_model.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,12 @@ class _ClassesBodyViewState extends State<ClassesBodyView> {
         slivers: [
           ClassesHeaderBar(levelId: widget.level.id),
 
-          BlocBuilder<ClassesCubit, ClassesState>(
+          BlocConsumer<ClassesCubit, ClassesState>(
+            listener: (context, state) {
+              if (state is ClassError) {
+                showErrorToast(context, 'Error', state.message);
+              }
+            },
             builder: (context, state) {
               if (state is ClassLoading) {
                 return const SliverFillRemaining(
@@ -37,17 +44,15 @@ class _ClassesBodyViewState extends State<ClassesBodyView> {
                 );
               }
 
-              if (state is ClassError) {
-                return SliverFillRemaining(
-                  child: Center(child: Text(state.message)),
-                );
-              }
-
               if (state is GetAllClassesSuccess) {
                 final classes = state.classes;
                 if (classes.isEmpty) {
-                  return const SliverFillRemaining(
-                    child: Center(child: Text('No classes yet')),
+                  return SliverFillRemaining(
+                    child: Center(
+                      child: CustomAnimatedTextKit(
+                        text: 'No classes yet, add a new class to get started!',
+                      ),
+                    ),
                   );
                 }
 
