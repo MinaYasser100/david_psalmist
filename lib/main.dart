@@ -1,11 +1,13 @@
 import 'package:david_psalmist/core/caching/hive/user_hive_helper.dart';
 import 'package:david_psalmist/core/dependency_injection/set_up_dependencies.dart';
 import 'package:david_psalmist/core/routing/app_router.dart';
+import 'package:david_psalmist/core/utils/constant.dart';
 import 'package:david_psalmist/core/utils/theme_data_func.dart';
 import 'package:david_psalmist/features/classes/data/repo/classes_repo_impl.dart';
 import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
 import 'package:david_psalmist/features/home/data/repo/level_repo_impl.dart';
 import 'package:david_psalmist/features/home/manager/level_cubit/level_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +23,8 @@ void main() async {
   // Initialize dependencies
   setupDependencies();
 
+  await EasyLocalization.ensureInitialized();
+
   await UserHiveHelper.init();
   runApp(
     MultiBlocProvider(
@@ -30,7 +34,15 @@ void main() async {
           create: (context) => ClassesCubit(getIt<ClassesRepoImpl>()),
         ),
       ],
-      child: const MyApp(),
+      child: EasyLocalization(
+        supportedLocales: const [
+          Locale(ConstantVariable.englishLangCode),
+          Locale(ConstantVariable.arabicLangCode),
+        ],
+        path: 'assets/localization',
+        fallbackLocale: const Locale(ConstantVariable.englishLangCode),
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -44,6 +56,9 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => MaterialApp.router(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         debugShowCheckedModeBanner: false,
         theme: themeDataFunc(),
         routerConfig: AppRouter.router,

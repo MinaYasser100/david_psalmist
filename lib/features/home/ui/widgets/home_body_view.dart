@@ -1,6 +1,7 @@
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/features/home/manager/level_cubit/level_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,26 +34,26 @@ class _HomeBodyViewState extends State<HomeBodyView> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'All Levels: ',
+                "allLevels".tr(),
                 style: AppTextStyles.styleBold28sp(
                   context,
                 ).copyWith(color: ColorsTheme().primaryDark),
               ),
             ),
           ),
-          BlocBuilder<LevelCubit, LevelState>(
-            builder: (context, state) {
-              if (state is LevelGetAllLevelsError) {
-                return SliverFillRemaining(
-                  child: Center(
-                    child: Text(
-                      state.error,
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.styleBold24sp(context),
-                    ),
+          BlocConsumer<LevelCubit, LevelState>(
+            listener: (context, state) {
+              if (state is LevelError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.error),
+                    backgroundColor: ColorsTheme().errorColor,
                   ),
                 );
-              } else if (state is LevelGetAllLevelsSuccess &&
+              }
+            },
+            builder: (context, state) {
+              if (state is LevelGetAllLevelsSuccess &&
                   context.read<LevelCubit>().levels.isEmpty) {
                 return CustomNoLevelsWidget();
               } else {

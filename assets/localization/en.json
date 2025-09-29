@@ -1,0 +1,23 @@
+{
+    "welcomeMessage": "Welcome",
+    "levelName": "Level Name",
+    "add": "Add",
+    "cancel": "Cancel",
+    "allLevels": "All Levels: ",
+    "delete": "Delete",
+    "Settings" : "Settings",
+    "Choose Language": "Choose Language",
+    "Logout": "Logout",
+    "Add a new Level": "Add a new Level",
+    "Enter the name": "Enter the name",
+    "Error" : "Error",
+    "Please enter the name": "Please enter the name",
+    "Success" : "Success",
+    "Level added successfully" : "Level added successfully",
+    "No levels found, add new level" : "No levels found, add new level",
+    "Delete Level" : "Delete Level",
+    "Are you sure you want to delete this level?" : "Are you sure you want to delete this level?",
+    "Yes" : "Yes",  
+    "No" : "No",
+    "Level deleted successfully" : "Level deleted successfully"
+}

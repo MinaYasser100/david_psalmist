@@ -18,4 +18,5 @@ class Routes {
   static const String verifyEmailView = '/verify-email';
   static const String classesView = '/classes';
   static const String classView = '/class';
+  static const String settingsView = '/settings';
 }

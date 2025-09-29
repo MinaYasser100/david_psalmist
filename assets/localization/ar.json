@@ -1,0 +1,23 @@
+{
+    "welcomeMessage": "مرحبًا",
+    "levelName": "اسم المستوى",
+    "add": "إضافة",
+    "cancel": "إلغاء",
+    "allLevels": "جميع المستويات: ",
+    "delete": "حذف",
+    "Settings" : "الإعدادات",
+    "Choose Language": "اختر اللغة",
+    "Logout": "تسجيل خروج",
+    "Add a new Level": "إضافة مستوى جديد",
+    "Enter the name": "أدخل الاسم",
+    "Error" : "خطأ",
+    "Please enter the name": "يرجى إدخال الاسم",
+    "Success" : "نجاح",
+    "Level added successfully" : "تمت إضافة المستوى بنجاح",
+    "No levels found, add new level" : "لم يتم العثور على مستويات، أضف مستوى جديد",
+    "Delete Level" : "حذف المستوى",
+    "Are you sure you want to delete this level?" : "هل أنت متأكد أنك تريد حذف هذا المستوى؟",
+    "Yes" : "نعم",
+    "No" : "لا",
+    "Level deleted successfully" : "تم حذف المستوى بنجاح"
+}

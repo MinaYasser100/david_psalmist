@@ -34,11 +34,14 @@ class CustomLevelItemView extends StatelessWidget {
         child: ListTile(
           textColor: ColorsTheme().whiteColor,
           title: Text(level.name, style: AppTextStyles.styleBold24sp(context)),
-          trailing: Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(
-              Icons.arrow_forward_ios,
-              color: ColorsTheme().whiteColor,
+          trailing: SizedBox(
+            width: 28,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: ColorsTheme().whiteColor,
+              ),
             ),
           ),
         ),

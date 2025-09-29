@@ -9,6 +9,7 @@ import 'package:david_psalmist/features/home/data/model/level_model.dart';
 import 'package:david_psalmist/features/home/ui/home_view.dart';
 import 'package:david_psalmist/features/login/ui/login_view.dart';
 import 'package:david_psalmist/features/register/ui/register_view.dart';
+import 'package:david_psalmist/features/settings/ui/settings_view.dart';
 import 'package:david_psalmist/features/verfiy_email/ui/verify_email_view.dart';
 import 'package:go_router/go_router.dart';
 
@@ -44,7 +45,7 @@ abstract class AppRouter {
         path: Routes.verifyEmailView,
         pageBuilder: (context, state) => fadeTransitionPage(VerifyEmailView()),
       ),
-
+      // Classes View
       GoRoute(
         path: Routes.classesView,
         pageBuilder: (context, state) {
@@ -53,7 +54,7 @@ abstract class AppRouter {
           return fadeTransitionPage(ClassesView(level: level));
         },
       ),
-
+      // Class View
       GoRoute(
         path: Routes.classView,
         pageBuilder: (context, state) {
@@ -61,6 +62,11 @@ abstract class AppRouter {
           if (classModel == null) throw Exception('class is not found');
           return fadeTransitionPage(ClassView(classModel: classModel));
         },
+      ),
+      // Settings View
+      GoRoute(
+        path: Routes.settingsView,
+        pageBuilder: (context, state) => fadeTransitionPage(SettingsView()),
       ),
     ],
   );

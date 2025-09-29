@@ -4,6 +4,7 @@ import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/core/widgets/custom_alert_dialoge.dart';
 import 'package:david_psalmist/features/home/data/model/level_model.dart';
 import 'package:david_psalmist/features/home/manager/level_cubit/level_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -40,10 +41,10 @@ class CustomSliverLevelsList extends StatelessWidget {
                 barrierDismissible: false,
                 context: context,
                 builder: (context) => CustomAlertDialog(
-                  title: 'Delete Level',
-                  content: 'Are you sure you want to delete ${level.name}?',
-                  nameOfNegativeButton: 'No',
-                  nameOfPositiveButton: 'Yes',
+                  title: 'Delete Level'.tr(),
+                  content: "Are you sure you want to delete this level?".tr(),
+                  nameOfNegativeButton: 'No'.tr(),
+                  nameOfPositiveButton: 'Yes'.tr(),
                   onNegativeButtonPressed: () =>
                       Navigator.of(context).pop(false),
                   onPositiveButtonPressed: () =>
@@ -60,8 +61,8 @@ class CustomSliverLevelsList extends StatelessWidget {
               cubit.deleteLevel(levelId: level.id);
               showSuccessToast(
                 context,
-                'Success',
-                'Level deleted successfully',
+                'Success'.tr(),
+                "Level deleted successfully".tr(),
               );
             },
             child: GestureDetector(

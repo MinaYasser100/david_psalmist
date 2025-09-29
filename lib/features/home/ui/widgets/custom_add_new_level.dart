@@ -2,6 +2,7 @@ import 'package:david_psalmist/core/model/text_field_model/text_field_model.dart
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/widgets/custom_text_form_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CustomAddNewItem extends StatelessWidget {
@@ -42,7 +43,7 @@ class CustomAddNewItem extends StatelessWidget {
             textFieldModel: TextFieldModel(
               controller: nameLevelController,
               labelText: labelText,
-              hintText: "Enter your name",
+              hintText: "Enter the name".tr(),
               icon: Icons.layers_rounded,
               keyboardType: TextInputType.text,
               validator: (value) => null,
