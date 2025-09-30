@@ -1,5 +1,6 @@
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'add_class_button.dart';
@@ -76,7 +77,7 @@ class ClassesHeaderTitle extends StatelessWidget {
         Icon(Icons.layers, color: ColorsTheme().primaryDark),
         const SizedBox(width: 8),
         Text(
-          'Add a new class',
+          "Add a new class".tr(),
           style: AppTextStyles.styleBold18sp(
             context,
           ).copyWith(color: Colors.black87),

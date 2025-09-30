@@ -19,5 +19,16 @@
     "Are you sure you want to delete this level?" : "هل أنت متأكد أنك تريد حذف هذا المستوى؟",
     "Yes" : "نعم",
     "No" : "لا",
-    "Level deleted successfully" : "تم حذف المستوى بنجاح"
+    "Level deleted successfully" : "تم حذف المستوى بنجاح",
+    "No classes yet, add a new class to get started!" : "لا توجد فصول حتى الآن، أضف فصلًا جديدًا للبدء!",
+    "No classes yet" : "لا توجد فصول حتى الآن",
+    "Add a new class" : "إضافة فصل جديد",
+    "Class Name" : "اسم الفصل",
+    "Class Really Added" : "تمت إضافة الفصل بنجاح",
+    "Delete Class" : "حذف الفصل",
+    "Are you sure you want to delete this class?" : "هل أنت متأكد أنك تريد حذف هذا الفصل؟",
+    "Class deleted successfully" : "تم حذف الفصل بنجاح",
+    "Update a class": "تحديث الفصل",
+    "Update": "تحديث",
+    "Class Really Updated": "تم تحديث الفصل بنجاح"
 }

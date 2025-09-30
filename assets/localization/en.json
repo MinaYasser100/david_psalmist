@@ -19,5 +19,16 @@
     "Are you sure you want to delete this level?" : "Are you sure you want to delete this level?",
     "Yes" : "Yes",  
     "No" : "No",
-    "Level deleted successfully" : "Level deleted successfully"
+    "Level deleted successfully" : "Level deleted successfully",
+    "No classes yet, add a new class to get started!" : "No classes yet, add a new class to get started!",
+    "No classes yet" : "No classes yet",
+    "Add a new class" : "Add a new class",
+    "Class Name" : "Class Name",
+    "Class Really Added" : "Class Really Added",
+    "Delete Class" : "Delete Class",
+    "Are you sure you want to delete this class?" : "Are you sure you want to delete this class?",
+    "Class deleted successfully" : "Class deleted successfully",
+    "Update a class": "Update a class",
+    "Update": "Update",
+    "Class Really Updated": "Class Really Updated"
 }

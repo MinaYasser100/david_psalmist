@@ -4,6 +4,7 @@ import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.
 import 'package:david_psalmist/features/classes/ui/widgets/classes_header_bar.dart';
 import 'package:david_psalmist/features/classes/ui/widgets/class_list_item.dart';
 import 'package:david_psalmist/features/home/data/model/level_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +34,7 @@ class _ClassesBodyViewState extends State<ClassesBodyView> {
           BlocConsumer<ClassesCubit, ClassesState>(
             listener: (context, state) {
               if (state is ClassError) {
-                showErrorToast(context, 'Error', state.message);
+                showErrorToast(context, 'Error'.tr(), state.message);
               }
             },
             builder: (context, state) {
@@ -50,7 +51,8 @@ class _ClassesBodyViewState extends State<ClassesBodyView> {
                   return SliverFillRemaining(
                     child: Center(
                       child: CustomAnimatedTextKit(
-                        text: 'No classes yet, add a new class to get started!',
+                        text: 'No classes yet, add a new class to get started!'
+                            .tr(),
                       ),
                     ),
                   );
@@ -68,8 +70,8 @@ class _ClassesBodyViewState extends State<ClassesBodyView> {
               // default - safe fallback
               final classes = context.read<ClassesCubit>().classes;
               if (classes.isEmpty) {
-                return const SliverFillRemaining(
-                  child: Center(child: Text('No classes yet')),
+                return SliverFillRemaining(
+                  child: Center(child: Text('No classes yet'.tr())),
                 );
               }
 

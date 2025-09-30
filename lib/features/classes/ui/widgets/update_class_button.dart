@@ -2,6 +2,7 @@ import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
 import 'package:david_psalmist/features/home/ui/widgets/custom_add_new_level.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,10 +29,14 @@ class _UpdateClassButtonState extends State<UpdateClassButton> {
     return BlocConsumer<ClassesCubit, ClassesState>(
       listener: (context, state) {
         if (state is ClassError) {
-          showErrorToast(context, 'Error', state.message);
+          showErrorToast(context, 'Error'.tr(), state.message);
         }
         if (state is ClassUpdated) {
-          showSuccessToast(context, 'Success', 'Class Really Added');
+          showSuccessToast(
+            context,
+            'Success'.tr(),
+            "Class Really Updated".tr(),
+          );
         }
       },
       builder: (context, state) {
@@ -43,15 +48,19 @@ class _UpdateClassButtonState extends State<UpdateClassButton> {
               builder: (context) => CustomAddNewItem(
                 nameLevelController: controller,
                 nameLevelFocusNode: focusNode,
-                title: 'Update a class',
-                nameOfNegativeButton: 'Cancel',
-                nameOfPositiveButton: 'Update',
-                labelText: 'Name of class',
+                title: "Update a class".tr(),
+                nameOfNegativeButton: 'cancel'.tr(),
+                nameOfPositiveButton: 'Update'.tr(),
+                labelText: 'Class Name'.tr(),
                 onNegativeButtonPressed: () => Navigator.pop(context),
                 onPositiveButtonPressed: () {
                   if (controller.text.trim().isEmpty) {
                     focusNode.unfocus();
-                    showErrorToast(context, 'Error', 'Please enter a name');
+                    showErrorToast(
+                      context,
+                      'Error'.tr(),
+                      "Please enter the name".tr(),
+                    );
                   } else {
                     if (controller.text.trim() != widget.classModel.name) {
                       context.read<ClassesCubit>().updateClass(

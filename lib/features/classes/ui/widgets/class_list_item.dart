@@ -5,6 +5,7 @@ import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -39,10 +40,10 @@ class ClassListItem extends StatelessWidget {
             barrierDismissible: false,
             context: context,
             builder: (context) => CustomAlertDialog(
-              title: 'Delete Class',
-              content: 'Are you sure you want to delete ${classModel.name}?',
-              nameOfNegativeButton: 'No',
-              nameOfPositiveButton: 'Yes',
+              title: "Delete Class".tr(),
+              content: "Are you sure you want to delete this class?".tr(),
+              nameOfNegativeButton: 'No'.tr(),
+              nameOfPositiveButton: 'Yes'.tr(),
               onNegativeButtonPressed: () => Navigator.of(context).pop(false),
               onPositiveButtonPressed: () => Navigator.of(context).pop(true),
             ),
@@ -55,7 +56,11 @@ class ClassListItem extends StatelessWidget {
           cubit.classes.removeWhere((c) => c.id == classModel.id);
           // then delete from remote
           cubit.deleteClass(classModel: classModel);
-          showSuccessToast(context, 'Success', 'Level deleted successfully');
+          showSuccessToast(
+            context,
+            'Success'.tr(),
+            "Class deleted successfully".tr(),
+          );
         },
         child: Ink(
           decoration: BoxDecoration(
