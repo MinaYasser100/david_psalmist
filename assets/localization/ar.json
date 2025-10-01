@@ -30,5 +30,8 @@
     "Class deleted successfully" : "تم حذف الفصل بنجاح",
     "Update a class": "تحديث الفصل",
     "Update": "تحديث",
-    "Class Really Updated": "تم تحديث الفصل بنجاح"
+    "Class Really Updated": "تم تحديث الفصل بنجاح",
+    "Scan QR Code": "مسح رمز الاستجابة السريعة",
+    "Place the QR code inside the area to scan it" : "ضع رمز الاستجابة السريعة داخل المنطقة لمسحه",
+    "QR Code Scanned" : "تم مسح رمز QR"
 }

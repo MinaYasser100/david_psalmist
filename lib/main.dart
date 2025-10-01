@@ -3,6 +3,8 @@ import 'package:david_psalmist/core/dependency_injection/set_up_dependencies.dar
 import 'package:david_psalmist/core/routing/app_router.dart';
 import 'package:david_psalmist/core/utils/constant.dart';
 import 'package:david_psalmist/core/utils/theme_data_func.dart';
+import 'package:david_psalmist/features/class_view/data/repo/scanner_repo.dart';
+import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
 import 'package:david_psalmist/features/classes/data/repo/classes_repo_impl.dart';
 import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
 import 'package:david_psalmist/features/home/data/repo/level_repo_impl.dart';
@@ -26,14 +28,14 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   await UserHiveHelper.init();
+  var providers = [
+    BlocProvider(create: (context) => LevelCubit(getIt<LevelRepoImpl>())),
+    BlocProvider(create: (context) => ClassesCubit(getIt<ClassesRepoImpl>())),
+    BlocProvider(create: (context) => ScannerCubit(getIt<ScannerRepoImpl>())),
+  ];
   runApp(
     MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => LevelCubit(getIt<LevelRepoImpl>())),
-        BlocProvider(
-          create: (context) => ClassesCubit(getIt<ClassesRepoImpl>()),
-        ),
-      ],
+      providers: providers,
       child: EasyLocalization(
         supportedLocales: const [
           Locale(ConstantVariable.englishLangCode),

@@ -30,5 +30,8 @@
     "Class deleted successfully" : "Class deleted successfully",
     "Update a class": "Update a class",
     "Update": "Update",
-    "Class Really Updated": "Class Really Updated"
+    "Class Really Updated": "Class Really Updated",
+    "Scan QR Code": "Scan QR Code",
+    "Place the QR code inside the area to scan it" : "Place the QR code inside the area to scan it",
+    "QR Code Scanned" : "QR Code Scanned"
 }
