@@ -1,6 +1,8 @@
 class StudentModel {
   final String? firstName;
   final String? lastName;
+  final String? studentId;
+  final int? attendanceCount;
   final String? sex;
   final String? phomeNumber;
   final String? parentNumber;
@@ -8,6 +10,7 @@ class StudentModel {
   final DateTime? birthday;
   final String? studentFather;
   final bool? isPsalmist;
+  final DateTime? createdAt;
   final String? levelName;
   final String? levelId;
   final String? className;
@@ -16,6 +19,8 @@ class StudentModel {
   StudentModel({
     required this.firstName,
     required this.lastName,
+    required this.studentId,
+    required this.attendanceCount,
     required this.sex,
     required this.phomeNumber,
     required this.parentNumber,
@@ -23,6 +28,7 @@ class StudentModel {
     required this.birthday,
     required this.studentFather,
     required this.isPsalmist,
+    required this.createdAt,
     required this.levelName,
     required this.levelId,
     required this.className,
@@ -33,6 +39,8 @@ class StudentModel {
     return StudentModel(
       firstName: map['firstName'] as String?,
       lastName: map['lastName'] as String?,
+      studentId: map['studentId'] as String?,
+      attendanceCount: map['attendanceCount'] as int?,
       sex: map['sex'] as String?,
       phomeNumber: map['phomeNumber'] as String?,
       parentNumber: map['parentNumber'] as String?,
@@ -40,6 +48,7 @@ class StudentModel {
       birthday: map['birthday'] as DateTime?,
       studentFather: map['studentFather'] as String?,
       isPsalmist: map['isPsalmist'] as bool?,
+      createdAt: map['createdAt'] as DateTime?,
       levelName: map['levelName'] as String?,
       levelId: map['levelId'] as String?,
       className: map['className'] as String?,
@@ -51,6 +60,8 @@ class StudentModel {
     return <String, dynamic>{
       'firstName': firstName,
       'lastName': lastName,
+      'studentId': studentId,
+      'attendanceCount': attendanceCount,
       'sex': sex,
       'phomeNumber': phomeNumber,
       'parentNumber': parentNumber,
@@ -58,6 +69,7 @@ class StudentModel {
       'birthday': birthday,
       'studentFather': studentFather,
       'isPsalmist': isPsalmist,
+      'createdAt': createdAt,
       'levelName': levelName,
       'levelId': levelId,
       'className': className,
