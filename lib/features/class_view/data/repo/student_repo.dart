@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:david_psalmist/core/firebase/firebase_firestore_error_handler.dart';
 import 'package:david_psalmist/core/model/student_model/student_model.dart';
-import 'package:david_psalmist/core/utils/constant.dart';
 import 'package:david_psalmist/features/class_view/data/services/student_firebase_services.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:uuid/uuid.dart';
@@ -19,7 +18,6 @@ abstract class StudentRepo {
 }
 
 class StudentRepoImpl implements StudentRepo {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseFirestoreErrorHandler firestoreErrorHandler;
   final StudentFirebaseServices studentFirebaseServices;
 
@@ -69,14 +67,10 @@ class StudentRepoImpl implements StudentRepo {
         className: classModel.name,
         classId: classModel.id,
       );
-      await _firestore
-          .collection(ConstantVariable.levelsCollection)
-          .doc(classModel.levelId)
-          .collection(ConstantVariable.classesCollection)
-          .doc(classModel.id)
-          .collection(ConstantVariable.studentsCollection)
-          .doc(Uuid().v4())
-          .set(studentModel.toMap());
+      await studentFirebaseServices.addStudentToClass(
+        studentModel: studentModel,
+        classModel: classModel,
+      );
       return Right('Student added successfully');
     } on FirebaseException catch (e) {
       return Left(e.message ?? 'Failed to add student');

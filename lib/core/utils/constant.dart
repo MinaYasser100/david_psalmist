@@ -14,4 +14,5 @@ class ConstantVariable {
   static const String levelsCollection = 'Levels';
   static const String classesCollection = 'Classes';
   static const String studentsCollection = 'Students';
+  static const String attendanceCollection = 'Attendances';
 }
