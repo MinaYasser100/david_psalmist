@@ -2,6 +2,11 @@ import 'package:david_psalmist/core/routing/animation_route.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/main_helper.dart';
 import 'package:david_psalmist/features/class_view/ui/class_view.dart';
+import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
+import 'package:david_psalmist/features/class_view/data/repo/scanner_repo.dart';
+import 'package:david_psalmist/features/class_view/data/repo/student_repo.dart';
+import 'package:david_psalmist/core/dependency_injection/set_up_dependencies.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:david_psalmist/features/classes/ui/classes_view.dart';
 import 'package:david_psalmist/features/forgot_password/ui/forgot_password_view.dart';
@@ -60,7 +65,15 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           final classModel = state.extra as ClassModel?;
           if (classModel == null) throw Exception('class is not found');
-          return fadeTransitionPage(ClassView(classModel: classModel));
+          return fadeTransitionPage(
+            BlocProvider(
+              create: (ctx) => ScannerCubit(
+                getIt<ScannerRepoImpl>(),
+                getIt<StudentRepoImpl>(),
+              ),
+              child: ClassView(classModel: classModel),
+            ),
+          );
         },
       ),
       // Settings View

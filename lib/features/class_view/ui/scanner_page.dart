@@ -1,5 +1,6 @@
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
+import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,13 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
 
 class ScannerPage extends StatefulWidget {
-  const ScannerPage({super.key});
+  const ScannerPage({
+    super.key,
+    required this.classModel,
+    required this.levelName,
+  });
+  final ClassModel classModel;
+  final String levelName;
 
   @override
   State<ScannerPage> createState() => _ScannerPageState();
@@ -47,41 +54,13 @@ class _ScannerPageState extends State<ScannerPage> {
       context.read<ScannerCubit>().processScannedCode(code);
     }
 
-    Future.delayed(const Duration(milliseconds: 500), () {
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          backgroundColor: ColorsTheme().whiteColor,
-          title: Text(
-            'QR Code Scanned'.tr(),
-            style: AppTextStyles.styleBold20sp(
-              context,
-            ).copyWith(color: ColorsTheme().primaryDark),
-          ),
-          content: Text(
-            code,
-            style: AppTextStyles.styleRegular18sp(
-              context,
-            ).copyWith(color: ColorsTheme().primaryDark),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'.tr()),
-            ),
-          ],
-        ),
-      ).then((_) {
-        // ensure scanner page is popped if dialog was closed by other means
-        if (mounted) {
-          try {
-            Navigator.of(context).maybePop();
-          } catch (_) {}
-        }
-      });
+    Future.delayed(const Duration(milliseconds: 500), () async {
+      await context.read<ScannerCubit>().checkStudentAttendance(
+        studentName: code,
+        levelName: widget.levelName,
+        classModel: widget.classModel,
+      );
+      if (mounted) Navigator.of(context).pop();
     });
   }
 

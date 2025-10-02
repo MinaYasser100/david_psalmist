@@ -1,9 +1,7 @@
 import 'package:david_psalmist/core/utils/colors.dart';
-import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/class_body_view.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:david_psalmist/features/class_view/ui/scanner_page.dart';
 
@@ -41,10 +39,7 @@ class ClassView extends StatelessWidget {
   void _showQRScanner(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => BlocProvider.value(
-          value: BlocProvider.of<ScannerCubit>(context),
-          child: const ScannerPage(),
-        ),
+        builder: (_) => ScannerPage(classModel: classModel, levelName: ''),
       ),
     );
   }

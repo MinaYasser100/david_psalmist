@@ -9,6 +9,7 @@ import 'package:david_psalmist/features/classes/data/repo/classes_repo_impl.dart
 import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
 import 'package:david_psalmist/features/home/data/repo/level_repo_impl.dart';
 import 'package:david_psalmist/features/home/manager/level_cubit/level_cubit.dart';
+import 'package:david_psalmist/features/class_view/data/repo/student_repo.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,10 @@ void main() async {
   var providers = [
     BlocProvider(create: (context) => LevelCubit(getIt<LevelRepoImpl>())),
     BlocProvider(create: (context) => ClassesCubit(getIt<ClassesRepoImpl>())),
-    BlocProvider(create: (context) => ScannerCubit(getIt<ScannerRepoImpl>())),
+    BlocProvider(
+      create: (context) =>
+          ScannerCubit(getIt<ScannerRepoImpl>(), getIt<StudentRepoImpl>()),
+    ),
   ];
   runApp(
     MultiBlocProvider(

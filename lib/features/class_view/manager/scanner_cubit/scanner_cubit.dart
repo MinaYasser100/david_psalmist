@@ -1,3 +1,5 @@
+import 'package:david_psalmist/features/class_view/data/repo/student_repo.dart';
+import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -6,13 +8,13 @@ import 'package:david_psalmist/features/class_view/data/repo/scanner_repo.dart';
 part 'scanner_state.dart';
 
 class ScannerCubit extends Cubit<ScannerState> {
-  final ScannerRepo repo;
-
-  ScannerCubit(this.repo) : super(ScannerInitial());
+  final ScannerRepo _scannerRepo;
+  final StudentRepo _studentRepo;
+  ScannerCubit(this._scannerRepo, this._studentRepo) : super(ScannerInitial());
 
   Future<void> scanQRCode(MobileScannerController controller) async {
     emit(ScannerLoading());
-    final result = await repo.scanQRCode(controller);
+    final result = await _scannerRepo.scanQRCode(controller);
     result.fold(
       (error) => emit(ScannerError(error)),
       (scannedName) => emit(ScannerSuccess(scannedName)),
@@ -31,5 +33,22 @@ class ScannerCubit extends Cubit<ScannerState> {
     // processing is required (e.g. repo lookup), do it here and emit
     // ScannerSuccess or ScannerError accordingly.
     emit(ScannerSuccess(code));
+  }
+
+  Future<void> checkStudentAttendance({
+    required String studentName,
+    required String levelName,
+    required ClassModel classModel,
+  }) async {
+    emit(ScannerProcessingAttendance());
+    final result = await _studentRepo.addStudentByQRCode(
+      studentName: studentName,
+      levelName: levelName,
+      classModel: classModel,
+    );
+    result.fold(
+      (error) => emit(ScannerAttendanceError(error)),
+      (message) => emit(ScannerAttendanceChecked(message: message)),
+    );
   }
 }
