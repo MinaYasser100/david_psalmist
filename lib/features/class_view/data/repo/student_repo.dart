@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:david_psalmist/core/firebase/firebase_firestore_error_handler.dart';
@@ -15,6 +17,10 @@ abstract class StudentRepo {
   Future<Either<String, List<StudentModel>>> getStudentsByClassId(
     ClassModel classModel,
   );
+
+  Future<Either<String, String>> studentAttendance({
+    required StudentModel studentModel,
+  });
 }
 
 class StudentRepoImpl implements StudentRepo {
@@ -35,15 +41,24 @@ class StudentRepoImpl implements StudentRepo {
       final existingStudentsEither = await getStudentsByClassId(classModel);
 
       final List<StudentModel> existingStudents = existingStudentsEither.fold(
-        (error) => [],
+        (error) => throw Exception(error),
         (students) => students,
       );
+      log(existingStudents.length.toString());
+      log(existingStudents.length.toString());
 
       for (var element in existingStudents) {
         String name =
             '${element.firstName!.toLowerCase()} ${element.lastName!.toLowerCase()}';
-        if (name.toLowerCase() == studentName.toLowerCase()) {
-          return Left('Student already exists in this class');
+        if (name == studentName.toLowerCase()) {
+          final attendanceResult = await studentAttendance(
+            studentModel: element,
+          );
+          return attendanceResult.fold(
+            (l) => Left(l),
+            (r) =>
+                Right('Successfully recorded attendance for existing student'),
+          );
         }
       }
 
@@ -71,7 +86,14 @@ class StudentRepoImpl implements StudentRepo {
         studentModel: studentModel,
         classModel: classModel,
       );
-      return Right('Student added successfully');
+      // After adding, record attendance for the new student
+      final attendanceResult = await studentAttendance(
+        studentModel: studentModel,
+      );
+      return attendanceResult.fold(
+        (l) => Left(l),
+        (r) => Right('Student added and attendance recorded'),
+      );
     } on FirebaseException catch (e) {
       return Left(e.message ?? 'Failed to add student');
     } catch (e) {
@@ -84,16 +106,50 @@ class StudentRepoImpl implements StudentRepo {
     ClassModel classModel,
   ) async {
     try {
+      log(
+        'Fetching students for class ${classModel.name} (${classModel.id}) in level ${classModel.levelId}',
+      );
       var result = await studentFirebaseServices.getStudentsByClassId(
         classModel,
       );
-      return Right(
-        result.docs.map((e) => StudentModel.fromMap(e.data())).toList(),
-      );
+
+      final List<StudentModel> students = [];
+      for (final doc in result.docs) {
+        try {
+          students.add(StudentModel.fromMap(doc.data()));
+        } catch (e, st) {
+          log('Failed to parse student doc ${doc.id}: $e\n$st');
+          // skip bad doc
+        }
+      }
+
+      log('Fetched ${students.length} students for class ${classModel.name}');
+      return Right(students);
     } on FirebaseException catch (e) {
       return Left(e.message ?? 'Failed to fetch students');
-    } catch (e) {
+    } catch (e, st) {
+      log('getStudentsByClassId unexpected error: $e\n$st');
       return const Left('Failed to fetch students');
+    }
+  }
+
+  @override
+  Future<Either<String, String>> studentAttendance({
+    required StudentModel studentModel,
+  }) async {
+    try {
+      studentModel.attendanceCount = studentModel.attendanceCount! + 1;
+      await studentFirebaseServices.updateStudentAttendance(
+        studentModel: studentModel,
+      );
+      await studentFirebaseServices.attendanceRecorded(
+        studentModel: studentModel,
+      );
+      return Right('Attendance recorded successfully');
+    } on FirebaseException catch (e) {
+      return Left(e.message ?? 'Failed to record attendance');
+    } catch (e) {
+      return const Left('Failed to record attendance');
     }
   }
 }

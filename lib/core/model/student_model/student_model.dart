@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class StudentModel {
   final String? firstName;
   final String? lastName;
   final String? studentId;
-  final int? attendanceCount;
+  int? attendanceCount;
   final String? sex;
   final String? phomeNumber;
   final String? parentNumber;
@@ -36,19 +38,38 @@ class StudentModel {
   });
 
   factory StudentModel.fromMap(Map<String, dynamic> map) {
+    DateTime? parseDate(dynamic value) {
+      if (value == null) return null;
+      try {
+        if (value is DateTime) return value;
+        if (value is Timestamp) return value.toDate();
+        if (value is int) return DateTime.fromMillisecondsSinceEpoch(value);
+        if (value is String) return DateTime.tryParse(value);
+      } catch (_) {}
+      return null;
+    }
+
+    int? parseInt(dynamic value) {
+      if (value == null) return null;
+      if (value is int) return value;
+      if (value is double) return value.toInt();
+      if (value is String) return int.tryParse(value);
+      return null;
+    }
+
     return StudentModel(
       firstName: map['firstName'] as String?,
       lastName: map['lastName'] as String?,
       studentId: map['studentId'] as String?,
-      attendanceCount: map['attendanceCount'] as int?,
+      attendanceCount: parseInt(map['attendanceCount']) ?? 0,
       sex: map['sex'] as String?,
       phomeNumber: map['phomeNumber'] as String?,
       parentNumber: map['parentNumber'] as String?,
       address: map['address'] as String?,
-      birthday: map['birthday'] as DateTime?,
+      birthday: parseDate(map['birthday']),
       studentFather: map['studentFather'] as String?,
       isPsalmist: map['isPsalmist'] as bool?,
-      createdAt: map['createdAt'] as DateTime?,
+      createdAt: parseDate(map['createdAt']),
       levelName: map['levelName'] as String?,
       levelId: map['levelId'] as String?,
       className: map['className'] as String?,
