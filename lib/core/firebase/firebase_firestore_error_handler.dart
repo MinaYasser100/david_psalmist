@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseFirestoreErrorHandler {
@@ -38,5 +41,40 @@ class FirebaseFirestoreErrorHandler {
       default:
         return 'An unexpected Firestore error occurred: ${e.message}';
     }
+  }
+
+  /// Map generic stream errors (use in `.handleError` or `catchError`) to user-friendly messages.
+  /// Handles FirebaseException, network/timeouts and common Dart errors.
+  String mapStreamError(Object error, [StackTrace? st]) {
+    // Firebase-specific errors
+    if (error is FirebaseException) {
+      return mapFirebaseFirestoreException(error);
+    }
+
+    // Network related
+    if (error is SocketException) {
+      return 'Network error. Please check your internet connection.';
+    }
+
+    if (error is TimeoutException) {
+      return 'Request timed out. Please try again.';
+    }
+
+    // Common Dart/stream errors
+    if (error is StateError) {
+      return error.message;
+    }
+
+    if (error is ArgumentError) {
+      return error.message ?? 'Invalid argument provided.';
+    }
+
+    // Fallback for other exception types
+    if (error is Exception) {
+      return error.toString();
+    }
+
+    // Unknown error object
+    return 'An unknown stream error occurred: ${error.runtimeType}';
   }
 }
