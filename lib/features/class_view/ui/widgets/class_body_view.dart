@@ -1,8 +1,11 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/features/class_view/manager/students_class_cubit/students_class_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'custom_student_item.dart';
 
 class ClassBodyView extends StatelessWidget {
   const ClassBodyView({super.key});
@@ -32,10 +35,7 @@ class ClassBodyView extends StatelessWidget {
             itemCount: students.length,
             itemBuilder: (context, index) {
               final student = students[index];
-              return ListTile(
-                title: Text('${student.firstName!} ${student.lastName!}'),
-                subtitle: Text('ID: ${student.studentId!}'),
-              );
+              return CustomStudentItem(student: student, index: index);
             },
           );
         } else {
@@ -43,9 +43,8 @@ class ClassBodyView extends StatelessWidget {
             itemCount: students.length,
             itemBuilder: (context, index) {
               final student = students[index];
-              return ListTile(
-                title: Text('${student.firstName!} ${student.lastName!}'),
-                subtitle: Text('ID: ${student.studentId!}'),
+              return FadeInRight(
+                child: CustomStudentItem(student: student, index: index),
               );
             },
           );
