@@ -1,3 +1,4 @@
+import 'package:david_psalmist/core/model/student_model/student_model.dart';
 import 'package:david_psalmist/core/routing/animation_route.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/main_helper.dart';
@@ -6,6 +7,7 @@ import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner
 import 'package:david_psalmist/features/class_view/data/repo/scanner_repo.dart';
 import 'package:david_psalmist/features/class_view/data/repo/student_repo.dart';
 import 'package:david_psalmist/core/dependency_injection/set_up_dependencies.dart';
+import 'package:david_psalmist/features/class_view/ui/widgets/students_search_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:david_psalmist/features/classes/ui/classes_view.dart';
@@ -80,6 +82,15 @@ abstract class AppRouter {
       GoRoute(
         path: Routes.settingsView,
         pageBuilder: (context, state) => fadeTransitionPage(SettingsView()),
+      ),
+      // Students Search View
+      GoRoute(
+        path: Routes.studentsSearchView,
+        pageBuilder: (context, state) {
+          final students = state.extra as List<StudentModel>?;
+          if (students == null) throw Exception('Students are not found');
+          return fadeTransitionPage(StudentsSearchView(students: students));
+        },
       ),
     ],
   );

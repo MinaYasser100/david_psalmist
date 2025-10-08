@@ -34,5 +34,10 @@
     "Scan QR Code": "Scan QR Code",
     "Place the QR code inside the area to scan it" : "Place the QR code inside the area to scan it",
     "QR Code Scanned" : "QR Code Scanned",
-    "Attendance:" : "Attendance: "
+    "Attendance:" : "Attendance: ",
+    "Search": "Search",
+    "No students found": "No students found",
+    "Search by name": "Search by name",
+    "Search here...": "Search here...",
+    "No students in this class yet, add new students to get started!" : "No students in this class yet, add new students to get started!"
 }

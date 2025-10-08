@@ -32,6 +32,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       autofocus: widget.textFieldModel.autofocus,
       focusNode: widget.textFieldModel.focusNode,
       onFieldSubmitted: widget.textFieldModel.onFieldSubmitted,
+      onChanged: widget.textFieldModel.onChanged,
       style: TextStyle(color: ColorsTheme().primaryDark),
       decoration: InputDecoration(
         labelText: widget.textFieldModel.labelText,

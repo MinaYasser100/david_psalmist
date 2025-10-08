@@ -11,6 +11,7 @@ class TextFieldModel {
   final AutovalidateMode? autovalidateMode;
   final FocusNode? focusNode;
   void Function(String)? onFieldSubmitted;
+  void Function(String)? onChanged;
   bool autofocus;
   final String? errorText;
   TextFieldModel({
@@ -26,5 +27,6 @@ class TextFieldModel {
     this.autofocus = false,
     this.onFieldSubmitted,
     this.errorText,
+    this.onChanged,
   });
 }

@@ -34,5 +34,10 @@
     "Scan QR Code": "مسح رمز الاستجابة السريعة",
     "Place the QR code inside the area to scan it" : "ضع رمز الاستجابة السريعة داخل المنطقة لمسحه",
     "QR Code Scanned" : "تم مسح رمز QR",
-    "Attendance:" : "الحضور: "
+    "Attendance:" : "الحضور: ", 
+    "Search": "بحث",
+    "No students found": "لم يتم العثور على طلاب",
+    "Search by name": "البحث بالاسم",
+    "Search here...": "ابحث هنا...",
+    "No students in this class yet, add new students to get started!" : "لا يوجد طلاب في هذا الفصل حتى الآن، أضف طلابًا جددًا للبدء!"
 }
