@@ -65,6 +65,8 @@ void setupDependencies() async {
   getIt.registerSingleton<ScannerRepoImpl>(ScannerRepoImpl());
   //Student Firebase Services
   getIt.registerSingleton<StudentFirebaseServices>(StudentFirebaseServices());
+  // students class services (provides snapshots for students in a class)
+  getIt.registerSingleton<StudentsClassServices>(StudentsClassServices());
   // student repo impl
   getIt.registerSingleton<StudentRepoImpl>(
     StudentRepoImpl(

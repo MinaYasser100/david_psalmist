@@ -4,6 +4,8 @@ import 'package:david_psalmist/core/routing/app_router.dart';
 import 'package:david_psalmist/core/utils/constant.dart';
 import 'package:david_psalmist/core/utils/theme_data_func.dart';
 import 'package:david_psalmist/features/class_view/data/repo/scanner_repo.dart';
+import 'package:david_psalmist/features/class_view/data/repo/students_class_repo.dart';
+import 'package:david_psalmist/features/class_view/manager/cubit/students_class_cubit.dart';
 import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
 import 'package:david_psalmist/features/classes/data/repo/classes_repo_impl.dart';
 import 'package:david_psalmist/features/classes/manager/class_cubit/class_cubit.dart';
@@ -35,6 +37,9 @@ void main() async {
     BlocProvider(
       create: (context) =>
           ScannerCubit(getIt<ScannerRepoImpl>(), getIt<StudentRepoImpl>()),
+    ),
+    BlocProvider(
+      create: (context) => StudentsClassCubit(getIt<StudentsClassRepoImpl>()),
     ),
   ];
   runApp(

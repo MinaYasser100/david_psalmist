@@ -1,19 +1,32 @@
 import 'package:david_psalmist/core/utils/colors.dart';
+import 'package:david_psalmist/features/class_view/manager/cubit/students_class_cubit.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/class_body_view.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:david_psalmist/features/class_view/ui/scanner_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ClassView extends StatelessWidget {
+class ClassView extends StatefulWidget {
   const ClassView({super.key, required this.classModel});
   final ClassModel classModel;
+
+  @override
+  State<ClassView> createState() => _ClassViewState();
+}
+
+class _ClassViewState extends State<ClassView> {
+  @override
+  void initState() {
+    context.read<StudentsClassCubit>().getStudents(widget.classModel);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(classModel.name),
+        title: Text(widget.classModel.name),
         actions: [
           IconButton(
             onPressed: () {},
@@ -39,11 +52,9 @@ class ClassView extends StatelessWidget {
   void _showQRScanner(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => ScannerPage(classModel: classModel, levelName: ''),
+        builder: (_) =>
+            ScannerPage(classModel: widget.classModel, levelName: ''),
       ),
     );
   }
-
-  // Scanned results are now handled inside ScannerPage. Keep this method
-  // removed to avoid unused symbol warnings.
 }
