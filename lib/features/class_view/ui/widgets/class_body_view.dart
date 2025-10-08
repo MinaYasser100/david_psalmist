@@ -1,4 +1,6 @@
-import 'package:david_psalmist/features/class_view/manager/cubit/students_class_cubit.dart';
+import 'package:david_psalmist/core/utils/colors.dart';
+import 'package:david_psalmist/core/utils/show_top_toast.dart';
+import 'package:david_psalmist/features/class_view/manager/students_class_cubit/students_class_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,15 +9,24 @@ class ClassBodyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StudentsClassCubit, StudentsClassState>(
+    return BlocConsumer<StudentsClassCubit, StudentsClassState>(
+      listener: (context, state) {
+        if (state is StudentsClassError) {
+          showErrorToast(context, 'Error', state.message);
+        }
+      },
       builder: (context, state) {
+        final students = context.read<StudentsClassCubit>().students;
         if (state is StudentsClassLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is StudentsClassLoaded) {
-          final students = state.students;
-
           if (students.isEmpty) {
-            return const Center(child: Text('No data available'));
+            return Center(
+              child: Text(
+                'No data available',
+                style: TextStyle(color: ColorsTheme().primaryColor),
+              ),
+            );
           }
           return ListView.builder(
             itemCount: students.length,
@@ -27,10 +38,17 @@ class ClassBodyView extends StatelessWidget {
               );
             },
           );
-        } else if (state is StudentsClassError) {
-          return Center(child: Text('Error: ${state.message}'));
         } else {
-          return const Center(child: Text('No data available'));
+          return ListView.builder(
+            itemCount: students.length,
+            itemBuilder: (context, index) {
+              final student = students[index];
+              return ListTile(
+                title: Text('${student.firstName!} ${student.lastName!}'),
+                subtitle: Text('ID: ${student.studentId!}'),
+              );
+            },
+          );
         }
       },
     );

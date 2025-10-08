@@ -17,33 +17,82 @@ class CustomLevelItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInLeft(
+      duration: Duration(milliseconds: 300 + (index * 50)),
       child: Container(
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              ColorsTheme().primaryDark,
-              ColorsTheme().primaryDark,
-              ColorsTheme().primaryDark,
-              ColorsTheme().primaryColor,
+              ColorsTheme().primaryDark.withValues(alpha: 0.05),
+              ColorsTheme().primaryDark.withValues(alpha: 0.03),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+          border: Border.all(
+            color: ColorsTheme().primaryDark.withValues(alpha: 0.2),
+          ),
         ),
-        child: ListTile(
-          textColor: ColorsTheme().whiteColor,
-          title: Text(level.name, style: AppTextStyles.styleBold24sp(context)),
-          trailing: SizedBox(
-            width: 28,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(
-                Icons.arrow_forward_ios,
-                color: ColorsTheme().whiteColor,
+        child: Row(
+          children: [
+            // circular icon with index
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    ColorsTheme().primaryColor,
+                    ColorsTheme().primaryDark,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorsTheme().primaryDark.withValues(alpha: 0.2),
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  '${index + 1}',
+                  style: AppTextStyles.styleBold24sp(
+                    context,
+                  ).copyWith(color: Colors.white, fontSize: 18),
+                ),
               ),
             ),
-          ),
+            const SizedBox(width: 12),
+            // title and subtitle
+            Expanded(
+              child: Text(
+                level.name,
+                style: AppTextStyles.styleBold24sp(
+                  context,
+                ).copyWith(fontSize: 18, color: ColorsTheme().primaryDark),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: ColorsTheme().primaryDark.withValues(alpha: 0.7),
+              size: 28,
+            ),
+          ],
         ),
       ),
     );

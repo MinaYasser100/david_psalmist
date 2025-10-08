@@ -1,5 +1,5 @@
 import 'package:david_psalmist/core/utils/colors.dart';
-import 'package:david_psalmist/features/class_view/manager/cubit/students_class_cubit.dart';
+import 'package:david_psalmist/features/class_view/manager/students_class_cubit/students_class_cubit.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/class_body_view.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:flutter/material.dart';

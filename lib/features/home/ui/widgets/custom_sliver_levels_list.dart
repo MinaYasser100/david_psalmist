@@ -30,7 +30,7 @@ class CustomSliverLevelsList extends StatelessWidget {
             background: Container(
               decoration: BoxDecoration(
                 color: ColorsTheme().errorColor,
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(16),
               ),
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -10,16 +10,19 @@ class StudentsClassCubit extends Cubit<StudentsClassState> {
   StudentsClassCubit(this._studentsClassRepo) : super(StudentsClassInitial());
 
   final StudentsClassRepo _studentsClassRepo;
+  List<StudentModel> students = <StudentModel>[];
 
   void getStudents(ClassModel classModel) {
     emit(StudentsClassLoading());
     try {
       final stream = _studentsClassRepo.getStudentsWithAttendance(classModel);
       stream.listen((either) {
-        either.fold(
-          (failure) => emit(StudentsClassError(message: failure)),
-          (students) => emit(StudentsClassLoaded(students: students)),
-        );
+        either.fold((failure) => emit(StudentsClassError(message: failure)), (
+          students,
+        ) {
+          this.students = students;
+          emit(StudentsClassLoaded(students: students));
+        });
       });
     } catch (e) {
       emit(StudentsClassError(message: e.toString()));
