@@ -2,6 +2,7 @@ import 'package:david_psalmist/core/model/student_model/student_model.dart';
 import 'package:david_psalmist/core/routing/animation_route.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/main_helper.dart';
+import 'package:david_psalmist/features/attendance/ui/attendance_view.dart';
 import 'package:david_psalmist/features/class_view/ui/class_view.dart';
 import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
 import 'package:david_psalmist/features/class_view/data/repo/scanner_repo.dart';
@@ -92,28 +93,11 @@ abstract class AppRouter {
           return fadeTransitionPage(StudentsSearchView(students: students));
         },
       ),
+      // Attendance View
+      GoRoute(
+        path: Routes.attendanceView,
+        pageBuilder: (context, state) => fadeTransitionPage(AttendanceView()),
+      ),
     ],
   );
 }
-
-// Future<String> getFirstScreen() async {
-//   final isOnboardingSeen = OnboardingHive().isOnboardingSeen();
-//   if (!isOnboardingSeen) {
-//     return Routes.onboarding;
-//   }
-//   // Ensure MonitoringSystemHiveService is ready
-//   final monitoringService =
-//       await GetIt.I.getAsync<MonitoringSystemHiveService>();
-//   final farmOwnerStatus = monitoringService.getFarmOwnerStatus();
-
-//   if (farmOwnerStatus == null) {
-//     return Routes.userTypeSelectionScreen;
-//   } else if (!farmOwnerStatus) {
-//     return Routes.layoutScreens;
-//   } else if (farmOwnerStatus &&
-//       monitoringService.getFarmerSelectedPlants().isEmpty) {
-//     return Routes.plantsSelectionScreen;
-//   } else {
-//     return Routes.layoutScreens;
-//   }
-// }

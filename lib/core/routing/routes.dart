@@ -20,4 +20,5 @@ class Routes {
   static const String classView = '/class';
   static const String settingsView = '/settings';
   static const String studentsSearchView = '/students-search';
+  static const String attendanceView = '/attendance';
 }

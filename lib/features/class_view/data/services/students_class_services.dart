@@ -14,7 +14,7 @@ class StudentsClassServices {
         .collection(ConstantVariable.classesCollection)
         .doc(classModel.id)
         .collection(ConstantVariable.studentsCollection)
-        .orderBy("createdAt")
+        .orderBy("createdAt", descending: true)
         .snapshots();
   }
 }
