@@ -1,7 +1,9 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/features/class_view/manager/students_class_cubit/students_class_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +17,7 @@ class ClassBodyView extends StatelessWidget {
     return BlocConsumer<StudentsClassCubit, StudentsClassState>(
       listener: (context, state) {
         if (state is StudentsClassError) {
-          showErrorToast(context, 'Error', state.message);
+          showErrorToast(context, 'Error'.tr(), state.message);
         }
       },
       builder: (context, state) {
@@ -26,8 +28,10 @@ class ClassBodyView extends StatelessWidget {
           if (students.isEmpty) {
             return Center(
               child: Text(
-                'No data available',
-                style: TextStyle(color: ColorsTheme().primaryColor),
+                'Add new students to get started!'.tr(),
+                style: AppTextStyles.styleBold20sp(
+                  context,
+                ).copyWith(color: ColorsTheme().primaryDark),
               ),
             );
           }
