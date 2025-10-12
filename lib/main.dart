@@ -3,6 +3,8 @@ import 'package:david_psalmist/core/dependency_injection/set_up_dependencies.dar
 import 'package:david_psalmist/core/routing/app_router.dart';
 import 'package:david_psalmist/core/utils/constant.dart';
 import 'package:david_psalmist/core/utils/theme_data_func.dart';
+import 'package:david_psalmist/features/attendance/data/repo/attendance_repo.dart';
+import 'package:david_psalmist/features/attendance/manager/cubit/attendance_cubit.dart';
 import 'package:david_psalmist/features/class_view/data/repo/scanner_repo.dart';
 import 'package:david_psalmist/features/class_view/data/repo/students_class_repo.dart';
 import 'package:david_psalmist/features/class_view/manager/students_class_cubit/students_class_cubit.dart';
@@ -40,6 +42,9 @@ void main() async {
     ),
     BlocProvider(
       create: (context) => StudentsClassCubit(getIt<StudentsClassRepoImpl>()),
+    ),
+    BlocProvider(
+      create: (context) => AttendanceCubit(getIt<AttendanceRepoImpl>()),
     ),
   ];
   runApp(

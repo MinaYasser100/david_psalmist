@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
@@ -6,6 +7,7 @@ import 'package:david_psalmist/features/class_view/manager/students_class_cubit/
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'custom_student_item.dart';
 
@@ -39,7 +41,12 @@ class ClassBodyView extends StatelessWidget {
             itemCount: students.length,
             itemBuilder: (context, index) {
               final student = students[index];
-              return CustomStudentItem(student: student, index: index);
+              return GestureDetector(
+                onTap: () {
+                  context.push(Routes.attendanceView, extra: student);
+                },
+                child: CustomStudentItem(student: student, index: index),
+              );
             },
           );
         } else {
@@ -48,7 +55,12 @@ class ClassBodyView extends StatelessWidget {
             itemBuilder: (context, index) {
               final student = students[index];
               return FadeInRight(
-                child: CustomStudentItem(student: student, index: index),
+                child: GestureDetector(
+                  onTap: () {
+                    context.push(Routes.attendanceView, extra: student);
+                  },
+                  child: CustomStudentItem(student: student, index: index),
+                ),
               );
             },
           );

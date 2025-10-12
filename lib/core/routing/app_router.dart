@@ -96,7 +96,11 @@ abstract class AppRouter {
       // Attendance View
       GoRoute(
         path: Routes.attendanceView,
-        pageBuilder: (context, state) => fadeTransitionPage(AttendanceView()),
+        pageBuilder: (context, state) {
+          final studentModel = state.extra as StudentModel?;
+          if (studentModel == null) throw Exception('Student is not found');
+          return fadeTransitionPage(AttendanceView(studentModel: studentModel));
+        },
       ),
     ],
   );

@@ -40,5 +40,7 @@
     "Search by name": "Search by name",
     "Search here...": "Search here...",
     "No students in this class yet, add new students to get started!" : "No students in this class yet, add new students to get started!",
-    "Add new students to get started!" : "Add new students to get started!"
+    "Add new students to get started!" : "Add new students to get started!",
+    "Error fetching attendance records" : "Error fetching attendance records",
+    "No attendance records found." : "No attendance records found."
 }

@@ -33,4 +33,5 @@ class ColorsTheme {
 
   // Error color
   final errorColor = const Color(0xFFD32F2F); // Vibrant Red for errors
+  final successColor = const Color(0xFF388E3C); // Green for success messages
 }
