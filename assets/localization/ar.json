@@ -42,5 +42,7 @@
     "No students in this class yet, add new students to get started!" : "لا يوجد طلاب في هذا الفصل حتى الآن، أضف طلابًا جددًا للبدء!",
     "Add new students to get started!" : "أضف طلابًا جددًا للبدء!",
     "Error fetching attendance records" : "خطأ في جلب سجلات الحضور",
-    "No attendance records found." : "لم يتم العثور على سجلات حضور."
+    "No attendance records found." : "لم يتم العثور على سجلات حضور.",
+    "Attendance record deleted successfully" : "تم حذف سجل الحضور بنجاح",
+    "Unknown error occurred while deleting attendance" : "حدث خطأ غير معروف أثناء حذف الحضور"
 }

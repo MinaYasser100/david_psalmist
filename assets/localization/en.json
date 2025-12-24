@@ -42,5 +42,7 @@
     "No students in this class yet, add new students to get started!" : "No students in this class yet, add new students to get started!",
     "Add new students to get started!" : "Add new students to get started!",
     "Error fetching attendance records" : "Error fetching attendance records",
-    "No attendance records found." : "No attendance records found."
+    "No attendance records found." : "No attendance records found.",
+    "Attendance record deleted successfully" : "Attendance record deleted successfully",
+    "Unknown error occurred while deleting attendance" : "Unknown error occurred while deleting attendance"
 }
