@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomGroupSeparator extends StatelessWidget {
   const CustomGroupSeparator({super.key, required this.groupByValue});
@@ -17,22 +18,26 @@ class CustomGroupSeparator extends StatelessWidget {
             Container(
               width: 70,
               height: 2,
-              color: ColorsTheme().secondaryDark.withValues(alpha: 0.3),
+              color: ColorsTheme().primaryDark.withValues(alpha: 0.3),
             ),
             Text(
-              '${groupByValue.month} / ${groupByValue.year}',
+              _formatMonthYear(groupByValue),
               style: AppTextStyles.styleBold18sp(
                 context,
-              ).copyWith(color: ColorsTheme().secondaryDark),
+              ).copyWith(color: ColorsTheme().primaryDark),
             ),
             Container(
               width: 70,
               height: 2,
-              color: ColorsTheme().secondaryDark.withValues(alpha: 0.3),
+              color: ColorsTheme().primaryDark.withValues(alpha: 0.3),
             ),
           ],
         ),
       ),
     );
+  }
+
+  String _formatMonthYear(DateTime date) {
+    return DateFormat('MMMM yyyy', 'ar').format(date);
   }
 }

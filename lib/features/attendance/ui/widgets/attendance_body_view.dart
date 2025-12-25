@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/features/attendance/manager/cubit/attendance_cubit.dart';
@@ -22,12 +23,26 @@ class AttendanceBodyView extends StatelessWidget {
         }
         if (state is AttendanceLoaded) {
           if (attendanceRecords.isEmpty) {
-            return Center(
-              child: Text(
-                'No attendance records found.'.tr(),
-                style: AppTextStyles.styleBold20sp(
-                  context,
-                ).copyWith(color: ColorsTheme().primaryDark),
+            return FadeInDown(
+              duration: const Duration(milliseconds: 600),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.event_busy_rounded,
+                      size: 100,
+                      color: ColorsTheme().primaryDark.withValues(alpha: 0.3),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'No attendance records found.'.tr(),
+                      style: AppTextStyles.styleBold20sp(
+                        context,
+                      ).copyWith(color: ColorsTheme().primaryDark),
+                    ),
+                  ],
+                ),
               ),
             );
           }

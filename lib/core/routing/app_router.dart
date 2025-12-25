@@ -9,6 +9,7 @@ import 'package:david_psalmist/features/class_view/data/repo/scanner_repo.dart';
 import 'package:david_psalmist/features/class_view/data/repo/student_repo.dart';
 import 'package:david_psalmist/core/dependency_injection/set_up_dependencies.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/students_search_view.dart';
+import 'package:david_psalmist/features/student_details/ui/student_details_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:david_psalmist/features/classes/ui/classes_view.dart';
@@ -100,6 +101,15 @@ abstract class AppRouter {
           final studentModel = state.extra as StudentModel?;
           if (studentModel == null) throw Exception('Student is not found');
           return fadeTransitionPage(AttendanceView(studentModel: studentModel));
+        },
+      ),
+      // Student Details View
+      GoRoute(
+        path: Routes.studentDetailsView,
+        pageBuilder: (context, state) {
+          final student = state.extra as StudentModel?;
+          if (student == null) throw Exception('Student is not found');
+          return fadeTransitionPage(StudentDetailsView(student: student));
         },
       ),
     ],

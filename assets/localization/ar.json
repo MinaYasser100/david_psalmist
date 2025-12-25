@@ -66,5 +66,22 @@
     "Select Birthday": "اختر تاريخ الميلاد",
     "Is Psalmist": "شماس",
     "Add Student": "إضافة طالب",
-    "Student added successfully": "تمت إضافة الطالب بنجاح"
+    "Student added successfully": "تمت إضافة الطالب بنجاح",
+    "studentDetails": "تفاصيل الطالب",
+    "personalInfo": "المعلومات الشخصية",
+    "contactInfo": "معلومات الاتصال",
+    "classInfo": "معلومات الفصل",
+    "studentId": "رقم الطالب",
+    "gender": "الجنس",
+    "birthday": "تاريخ الميلاد",
+    "phone": "رقم الهاتف",
+    "parentNumber": "رقم ولي الأمر",
+    "fatherName": "اسم الأب الاعتراف",
+    "address": "العنوان",
+    "level": "المستوى",
+    "class": "الفصل",
+    "attendanceCount": "عدد مرات الحضور",
+    "createdAt": "تاريخ الإضافة",
+    "notAvailable": "غير متوفر",
+    "psalmist": "شماس"
 }

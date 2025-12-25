@@ -6,8 +6,13 @@ import 'package:flutter/material.dart';
 import 'add_class_button.dart';
 
 class ClassesHeaderBar extends StatefulWidget {
-  const ClassesHeaderBar({super.key, required this.levelId});
+  const ClassesHeaderBar({
+    super.key,
+    required this.levelId,
+    required this.levelName,
+  });
   final String levelId;
+  final String levelName;
   @override
   State<ClassesHeaderBar> createState() => _ClassesHeaderBarState();
 }
@@ -55,6 +60,7 @@ class _ClassesHeaderBarState extends State<ClassesHeaderBar> {
                       controller: _controller,
                       focusNode: _focusNode,
                       levelId: widget.levelId,
+                      levelName: widget.levelName,
                     ),
                   ],
                 );

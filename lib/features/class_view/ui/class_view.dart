@@ -93,7 +93,7 @@ class _ClassViewState extends State<ClassView> {
         value: context.read<ScannerCubit>(),
         child: AddStudentBottomSheet(
           classModel: widget.classModel,
-          levelName: widget.classModel.name,
+          levelName: widget.classModel.levelName ?? 'Unknown Level',
         ),
       ),
     );

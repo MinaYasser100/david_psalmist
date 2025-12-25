@@ -66,5 +66,22 @@
     "Select Birthday": "Select Birthday",
     "Is Psalmist": "Is Psalmist",
     "Add Student": "Add Student",
-    "Student added successfully": "Student added successfully"
+    "Student added successfully": "Student added successfully",
+    "studentDetails": "Student Details",
+    "personalInfo": "Personal Information",
+    "contactInfo": "Contact Information",
+    "classInfo": "Class Information",
+    "studentId": "Student ID",
+    "gender": "Gender",
+    "birthday": "Birthday",
+    "phone": "Phone Number",
+    "parentNumber": "Parent Number",
+    "fatherName": "Father Name",
+    "address": "Address",
+    "level": "Level",
+    "class": "Class",
+    "attendanceCount": "Attendance Count",
+    "createdAt": "Created At",
+    "notAvailable": "Not Available",
+    "psalmist": "Psalmist"
 }

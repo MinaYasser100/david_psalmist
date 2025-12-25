@@ -29,7 +29,10 @@ class _ClassesBodyViewState extends State<ClassesBodyView> {
       padding: const EdgeInsets.all(16),
       child: CustomScrollView(
         slivers: [
-          ClassesHeaderBar(levelId: widget.level.id),
+          ClassesHeaderBar(
+            levelId: widget.level.id,
+            levelName: widget.level.name,
+          ),
 
           BlocConsumer<ClassesCubit, ClassesState>(
             listener: (context, state) {

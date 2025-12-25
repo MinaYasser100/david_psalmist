@@ -14,11 +14,13 @@ class AddClassButton extends StatelessWidget {
     required this.controller,
     required this.focusNode,
     required this.levelId,
+    required this.levelName,
   });
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final String levelId;
+  final String levelName;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +62,7 @@ class AddClassButton extends StatelessWidget {
                         id: Uuid().v4(),
                         name: controller.text,
                         levelId: levelId,
+                        levelName: levelName,
                       ),
                     );
                     controller.clear();
