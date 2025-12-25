@@ -51,4 +51,35 @@ class ScannerCubit extends Cubit<ScannerState> {
       (message) => emit(ScannerAttendanceChecked(message: message)),
     );
   }
+
+  Future<void> addStudentByQRCode({
+    required ClassModel classModel,
+    required String studentName,
+    required String levelName,
+    String? sex,
+    String? phoneNumber,
+    String? parentNumber,
+    String? address,
+    DateTime? birthday,
+    String? fatherName,
+    bool? isPsalmist,
+  }) async {
+    emit(ScannerLoading());
+    final result = await _studentRepo.addStudentByQRCode(
+      classModel: classModel,
+      studentName: studentName,
+      levelName: levelName,
+      sex: sex,
+      phoneNumber: phoneNumber,
+      parentNumber: parentNumber,
+      address: address,
+      birthday: birthday,
+      fatherName: fatherName,
+      isPsalmist: isPsalmist,
+    );
+    result.fold(
+      (error) => emit(ScannerError(error)),
+      (message) => emit(ScannerSuccess(message)),
+    );
+  }
 }

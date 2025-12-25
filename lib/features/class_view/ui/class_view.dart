@@ -1,6 +1,8 @@
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
+import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
 import 'package:david_psalmist/features/class_view/manager/students_class_cubit/students_class_cubit.dart';
+import 'package:david_psalmist/features/class_view/ui/widgets/add_student_bottom_sheet.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/class_body_view.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +43,10 @@ class _ClassViewState extends State<ClassView> {
             },
             icon: Icons.search,
           ),
-          customActionBar(onPressed: () {}, icon: Icons.add),
+          customActionBar(
+            onPressed: () => _showAddStudentBottomSheet(context),
+            icon: Icons.add,
+          ),
         ],
       ),
       body: const ClassBodyView(),
@@ -75,6 +80,21 @@ class _ClassViewState extends State<ClassView> {
       MaterialPageRoute(
         builder: (_) =>
             ScannerPage(classModel: widget.classModel, levelName: ''),
+      ),
+    );
+  }
+
+  void _showAddStudentBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => BlocProvider.value(
+        value: context.read<ScannerCubit>(),
+        child: AddStudentBottomSheet(
+          classModel: widget.classModel,
+          levelName: widget.classModel.name,
+        ),
       ),
     );
   }
