@@ -8,10 +8,12 @@ class AddStudentSubmitButton extends StatelessWidget {
     super.key,
     required this.isLoading,
     required this.onPressed,
+    this.isEditMode = false,
   });
 
   final bool isLoading;
   final VoidCallback onPressed;
+  final bool isEditMode;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,10 @@ class AddStudentSubmitButton extends StatelessWidget {
                 color: ColorsTheme().primaryDark,
               ),
             )
-          : CustomButton(text: 'Add Student'.tr(), onPressed: onPressed),
+          : CustomButton(
+              text: isEditMode ? 'Update Student'.tr() : 'Add Student'.tr(),
+              onPressed: onPressed,
+            ),
     );
   }
 }

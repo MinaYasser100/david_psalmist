@@ -46,6 +46,17 @@ class StudentFirebaseServices {
         .update(studentModel.toMap());
   }
 
+  Future<void> updateStudentData({required StudentModel studentModel}) async {
+    await _firestore
+        .collection(ConstantVariable.levelsCollection)
+        .doc(studentModel.levelId)
+        .collection(ConstantVariable.classesCollection)
+        .doc(studentModel.classId)
+        .collection(ConstantVariable.studentsCollection)
+        .doc(studentModel.studentId)
+        .update(studentModel.toMap());
+  }
+
   Future<void> attendanceRecorded({required StudentModel studentModel}) async {
     AttendanceModel attendanceModel = AttendanceModel(
       id: Uuid().v4(),

@@ -89,9 +89,13 @@ abstract class AppRouter {
       GoRoute(
         path: Routes.studentsSearchView,
         pageBuilder: (context, state) {
-          final students = state.extra as List<StudentModel>?;
-          if (students == null) throw Exception('Students are not found');
-          return fadeTransitionPage(StudentsSearchView(students: students));
+          final extra = state.extra as Map<String, dynamic>?;
+          if (extra == null) throw Exception('Data not found');
+          final students = extra['students'] as List<StudentModel>;
+          final classModel = extra['classModel'] as ClassModel;
+          return fadeTransitionPage(
+            StudentsSearchView(students: students, classModel: classModel),
+          );
         },
       ),
       // Attendance View

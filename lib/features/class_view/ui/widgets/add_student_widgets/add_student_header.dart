@@ -3,7 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AddStudentHeader extends StatelessWidget {
-  const AddStudentHeader({super.key});
+  const AddStudentHeader({super.key, this.isEditMode = false});
+
+  final bool isEditMode;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class AddStudentHeader extends StatelessWidget {
         ),
         // Title
         Text(
-          'Add New Student'.tr(),
+          isEditMode ? 'Edit Student'.tr() : 'Add New Student'.tr(),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,

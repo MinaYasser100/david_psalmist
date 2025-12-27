@@ -28,6 +28,10 @@ abstract class StudentRepo {
   Future<Either<String, String>> studentAttendance({
     required StudentModel studentModel,
   });
+
+  Future<Either<String, String>> updateStudent({
+    required StudentModel studentModel,
+  });
 }
 
 class StudentRepoImpl implements StudentRepo {
@@ -164,6 +168,22 @@ class StudentRepoImpl implements StudentRepo {
       return Left(e.message ?? 'Failed to record attendance');
     } catch (e) {
       return const Left('Failed to record attendance');
+    }
+  }
+
+  @override
+  Future<Either<String, String>> updateStudent({
+    required StudentModel studentModel,
+  }) async {
+    try {
+      await studentFirebaseServices.updateStudentData(
+        studentModel: studentModel,
+      );
+      return Right('Student updated successfully');
+    } on FirebaseException catch (e) {
+      return Left(e.message ?? 'Failed to update student');
+    } catch (e) {
+      return const Left('Failed to update student');
     }
   }
 }

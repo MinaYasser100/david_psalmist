@@ -4,12 +4,18 @@ import 'package:david_psalmist/core/model/text_field_model/text_field_model.dart
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/widgets/custom_text_form_field.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/custom_student_item.dart';
+import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class StudentsSearchView extends StatefulWidget {
-  const StudentsSearchView({super.key, required this.students});
+  const StudentsSearchView({
+    super.key,
+    required this.students,
+    required this.classModel,
+  });
   final List<StudentModel> students;
+  final ClassModel classModel;
 
   @override
   State<StudentsSearchView> createState() => _StudentsSearchViewState();
@@ -99,7 +105,11 @@ class _StudentsSearchViewState extends State<StudentsSearchView> {
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final student = _filteredStudents[index];
                   return FadeInRight(
-                    child: CustomStudentItem(student: student, index: index),
+                    child: CustomStudentItem(
+                      student: student,
+                      index: index,
+                      classModel: widget.classModel,
+                    ),
                   );
                 }, childCount: _filteredStudents.length),
               ),

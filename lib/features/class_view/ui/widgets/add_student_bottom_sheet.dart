@@ -1,3 +1,4 @@
+import 'package:david_psalmist/core/model/student_model/student_model.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/add_student_widgets/add_student_birthday_psalmist.dart';
@@ -16,10 +17,12 @@ class AddStudentBottomSheet extends StatefulWidget {
     super.key,
     required this.classModel,
     required this.levelName,
+    this.studentModel,
   });
 
   final ClassModel classModel;
   final String levelName;
+  final StudentModel? studentModel;
 
   @override
   State<AddStudentBottomSheet> createState() => _AddStudentBottomSheetState();
@@ -49,12 +52,21 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
-    _phoneNumberController = TextEditingController();
-    _parentNumberController = TextEditingController();
-    _addressController = TextEditingController();
-    _fatherNameController = TextEditingController();
+    final student = widget.studentModel;
+    _firstNameController = TextEditingController(
+      text: student?.firstName ?? '',
+    );
+    _lastNameController = TextEditingController(text: student?.lastName ?? '');
+    _phoneNumberController = TextEditingController(
+      text: student?.phomeNumber ?? '',
+    );
+    _parentNumberController = TextEditingController(
+      text: student?.parentNumber ?? '',
+    );
+    _addressController = TextEditingController(text: student?.address ?? '');
+    _fatherNameController = TextEditingController(
+      text: student?.studentFather ?? '',
+    );
 
     _firstNameFocus = FocusNode();
     _lastNameFocus = FocusNode();
@@ -62,6 +74,13 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
     _parentNumberFocus = FocusNode();
     _addressFocus = FocusNode();
     _fatherNameFocus = FocusNode();
+
+    // Initialize with existing data if editing
+    if (student != null) {
+      _selectedGender = student.sex;
+      _selectedBirthday = student.birthday;
+      _isPsalmist = student.isPsalmist ?? false;
+    }
   }
 
   @override
@@ -124,7 +143,7 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header
-                const AddStudentHeader(),
+                AddStudentHeader(isEditMode: widget.studentModel != null),
 
                 // Name Fields
                 AddStudentNameFields(
@@ -171,6 +190,7 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
                 AddStudentSubmitButton(
                   isLoading: _isLoading,
                   onPressed: _handleAddStudent,
+                  isEditMode: widget.studentModel != null,
                 ),
                 const SizedBox(height: 16),
               ],
@@ -205,24 +225,48 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
-      // Combine first and last name
-      final fullName =
-          '${_firstNameController.text.trim()} ${_lastNameController.text.trim()}';
+      if (widget.studentModel != null) {
+        // Update existing student
+        final updatedStudent = StudentModel(
+          firstName: _firstNameController.text.trim(),
+          lastName: _lastNameController.text.trim(),
+          studentId: widget.studentModel!.studentId,
+          attendanceCount: widget.studentModel!.attendanceCount,
+          sex: _selectedGender,
+          phomeNumber: _phoneNumberController.text.trim(),
+          parentNumber: _parentNumberController.text.trim(),
+          address: _addressController.text.trim(),
+          birthday: _selectedBirthday,
+          studentFather: _fatherNameController.text.trim(),
+          isPsalmist: _isPsalmist,
+          createdAt: widget.studentModel!.createdAt,
+          levelName: widget.studentModel!.levelName,
+          levelId: widget.studentModel!.levelId,
+          className: widget.studentModel!.className,
+          classId: widget.studentModel!.classId,
+        );
 
-      // Call the existing addStudentByQRCode method
-      context.read<ScannerCubit>().addStudentByQRCode(
-        classModel: widget.classModel,
-        studentName: fullName,
-        levelName: widget.levelName,
-        // Additional fields (we'll need to modify the repo to accept these)
-        sex: _selectedGender,
-        phoneNumber: _phoneNumberController.text.trim(),
-        parentNumber: _parentNumberController.text.trim(),
-        address: _addressController.text.trim(),
-        birthday: _selectedBirthday,
-        fatherName: _fatherNameController.text.trim(),
-        isPsalmist: _isPsalmist,
-      );
+        context.read<ScannerCubit>().updateStudent(
+          studentModel: updatedStudent,
+        );
+      } else {
+        // Add new student
+        final fullName =
+            '${_firstNameController.text.trim()} ${_lastNameController.text.trim()}';
+
+        context.read<ScannerCubit>().addStudentByQRCode(
+          classModel: widget.classModel,
+          studentName: fullName,
+          levelName: widget.levelName,
+          sex: _selectedGender,
+          phoneNumber: _phoneNumberController.text.trim(),
+          parentNumber: _parentNumberController.text.trim(),
+          address: _addressController.text.trim(),
+          birthday: _selectedBirthday,
+          fatherName: _fatherNameController.text.trim(),
+          isPsalmist: _isPsalmist,
+        );
+      }
     }
   }
 }

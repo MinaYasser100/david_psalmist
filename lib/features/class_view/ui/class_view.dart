@@ -38,7 +38,10 @@ class _ClassViewState extends State<ClassView> {
             onPressed: () {
               context.push(
                 Routes.studentsSearchView,
-                extra: context.read<StudentsClassCubit>().students,
+                extra: {
+                  'students': context.read<StudentsClassCubit>().students,
+                  'classModel': widget.classModel,
+                },
               );
             },
             icon: Icons.search,
@@ -49,7 +52,7 @@ class _ClassViewState extends State<ClassView> {
           ),
         ],
       ),
-      body: const ClassBodyView(),
+      body: ClassBodyView(classModel: widget.classModel),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showQRScanner(context),
         child: const Icon(Icons.qr_code_scanner),

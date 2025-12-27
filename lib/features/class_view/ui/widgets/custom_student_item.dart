@@ -1,6 +1,7 @@
 import 'package:david_psalmist/core/model/student_model/student_model.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/widgets/custom_alert_dialoge.dart';
+import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,12 @@ class CustomStudentItem extends StatelessWidget {
     super.key,
     required this.student,
     required this.index,
+    required this.classModel,
   });
 
   final StudentModel student;
   final int index;
+  final ClassModel classModel;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +67,7 @@ class CustomStudentItem extends StatelessWidget {
           theme: theme,
           index: index,
           student: student,
+          classModel: classModel,
         ),
       ),
     );

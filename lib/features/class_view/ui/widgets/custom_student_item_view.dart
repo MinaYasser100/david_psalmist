@@ -3,8 +3,12 @@ import 'package:david_psalmist/core/model/student_model/student_model.dart';
 import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
+import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
+import 'package:david_psalmist/features/class_view/ui/widgets/add_student_bottom_sheet.dart';
+import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomStudentItemView extends StatelessWidget {
@@ -13,11 +17,13 @@ class CustomStudentItemView extends StatelessWidget {
     required this.theme,
     required this.index,
     required this.student,
+    required this.classModel,
   });
 
   final ColorsTheme theme;
   final int index;
   final StudentModel student;
+  final ClassModel classModel;
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +218,7 @@ class CustomStudentItemView extends StatelessWidget {
                       // Edit Button
                       InkWell(
                         onTap: () {
-                          // TODO: Add edit functionality
+                          _showEditStudentBottomSheet(context);
                         },
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
@@ -242,6 +248,22 @@ class CustomStudentItemView extends StatelessWidget {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  void _showEditStudentBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => BlocProvider.value(
+        value: context.read<ScannerCubit>(),
+        child: AddStudentBottomSheet(
+          classModel: classModel,
+          levelName: classModel.levelName ?? 'Unknown Level',
+          studentModel: student,
         ),
       ),
     );

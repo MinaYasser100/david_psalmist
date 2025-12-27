@@ -1,3 +1,4 @@
+import 'package:david_psalmist/core/model/student_model/student_model.dart';
 import 'package:david_psalmist/features/class_view/data/repo/student_repo.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,15 @@ class ScannerCubit extends Cubit<ScannerState> {
       fatherName: fatherName,
       isPsalmist: isPsalmist,
     );
+    result.fold(
+      (error) => emit(ScannerError(error)),
+      (message) => emit(ScannerSuccess(message)),
+    );
+  }
+
+  Future<void> updateStudent({required StudentModel studentModel}) async {
+    emit(ScannerLoading());
+    final result = await _studentRepo.updateStudent(studentModel: studentModel);
     result.fold(
       (error) => emit(ScannerError(error)),
       (message) => emit(ScannerSuccess(message)),
