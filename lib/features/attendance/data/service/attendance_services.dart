@@ -51,4 +51,20 @@ class AttendanceServices {
         .doc(attendanceModel.id)
         .set(attendanceModel.toMap());
   }
+
+  Future<void> updateAttendanceLessons({
+    required StudentModel studentModel,
+    required AttendanceModel attendanceModel,
+  }) async {
+    await _firestore
+        .collection(ConstantVariable.levelsCollection)
+        .doc(studentModel.levelId)
+        .collection(ConstantVariable.classesCollection)
+        .doc(studentModel.classId)
+        .collection(ConstantVariable.studentsCollection)
+        .doc(studentModel.studentId)
+        .collection(ConstantVariable.attendanceCollection)
+        .doc(attendanceModel.id)
+        .update({'lessonsAttended': attendanceModel.lessonsAttended});
+  }
 }

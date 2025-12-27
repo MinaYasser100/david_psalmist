@@ -55,4 +55,17 @@ class AttendanceCubit extends Cubit<AttendanceState> {
       // The stream will automatically update the list
     });
   }
+
+  Future<void> updateAttendanceLessons({
+    required StudentModel studentModel,
+    required AttendanceModel attendanceModel,
+  }) async {
+    final result = await _attendanceRepo.updateAttendanceLessons(
+      studentModel: studentModel,
+      attendanceModel: attendanceModel,
+    );
+    result.fold((error) => emit(AttendanceError(error: error)), (success) {
+      // The stream will automatically update the list
+    });
+  }
 }

@@ -21,6 +21,11 @@ abstract class AttendanceRepo {
     required StudentModel studentModel,
     required DateTime selectedDate,
   });
+
+  Future<Either<String, String>> updateAttendanceLessons({
+    required StudentModel studentModel,
+    required AttendanceModel attendanceModel,
+  });
 }
 
 class AttendanceRepoImpl implements AttendanceRepo {
@@ -91,6 +96,7 @@ class AttendanceRepoImpl implements AttendanceRepo {
         id: Uuid().v4(),
         studentId: studentModel.studentId!,
         date: selectedDate,
+        lessonsAttended: 3, // Default 3 lessons
       );
       await attendanceServices.addAttendanceRecord(
         studentModel: studentModel,
@@ -101,6 +107,24 @@ class AttendanceRepoImpl implements AttendanceRepo {
       return Left(firestoreErrorHandler.mapFirebaseFirestoreException(e));
     } catch (e) {
       return Left('Failed to record attendance'.tr());
+    }
+  }
+
+  @override
+  Future<Either<String, String>> updateAttendanceLessons({
+    required StudentModel studentModel,
+    required AttendanceModel attendanceModel,
+  }) async {
+    try {
+      await attendanceServices.updateAttendanceLessons(
+        studentModel: studentModel,
+        attendanceModel: attendanceModel,
+      );
+      return Right('Lessons updated successfully'.tr());
+    } on FirebaseException catch (e) {
+      return Left(firestoreErrorHandler.mapFirebaseFirestoreException(e));
+    } catch (e) {
+      return Left('Failed to update lessons'.tr());
     }
   }
 }
