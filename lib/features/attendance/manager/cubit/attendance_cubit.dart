@@ -29,4 +29,30 @@ class AttendanceCubit extends Cubit<AttendanceState> {
       emit(AttendanceError(error: "Error fetching attendance records".tr()));
     }
   }
+
+  Future<void> addAttendanceRecord({
+    required StudentModel studentModel,
+    required DateTime selectedDate,
+  }) async {
+    final result = await _attendanceRepo.addAttendanceRecord(
+      studentModel: studentModel,
+      selectedDate: selectedDate,
+    );
+    result.fold((error) => emit(AttendanceError(error: error)), (success) {
+      // The stream will automatically update the list
+    });
+  }
+
+  Future<void> deleteAttendanceRecord({
+    required StudentModel studentModel,
+    required AttendanceModel attendanceModel,
+  }) async {
+    final result = await _attendanceRepo.deleteAttendanceRecord(
+      studentModel: studentModel,
+      attendanceModel: attendanceModel,
+    );
+    result.fold((error) => emit(AttendanceError(error: error)), (success) {
+      // The stream will automatically update the list
+    });
+  }
 }

@@ -90,5 +90,9 @@
     "attendanceCount": "Attendance Count",
     "createdAt": "Created At",
     "notAvailable": "Not Available",
-    "psalmist": "Psalmist"
+    "psalmist": "Psalmist",
+    "attendanceRecorded": "Attendance recorded successfully",
+    "errorAddingAttendance": "Error adding attendance record",
+    "Are you sure you want to delete this attendance record?": "Are you sure you want to delete this attendance record?",
+    "Attendance record deleted successfully": "Attendance record deleted successfully"
 }

@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:david_psalmist/core/model/student_model/student_model.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/features/attendance/manager/cubit/attendance_cubit.dart';
@@ -9,7 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'attendance_group_list_view.dart';
 
 class AttendanceBodyView extends StatelessWidget {
-  const AttendanceBodyView({super.key});
+  const AttendanceBodyView({super.key, required this.studentModel});
+
+  final StudentModel studentModel;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +49,15 @@ class AttendanceBodyView extends StatelessWidget {
               ),
             );
           }
-          return AttendanceGroupListView(attendanceRecords: attendanceRecords);
+          return AttendanceGroupListView(
+            attendanceRecords: attendanceRecords,
+            studentModel: studentModel,
+          );
         } else {
-          return AttendanceGroupListView(attendanceRecords: attendanceRecords);
+          return AttendanceGroupListView(
+            attendanceRecords: attendanceRecords,
+            studentModel: studentModel,
+          );
         }
       },
     );

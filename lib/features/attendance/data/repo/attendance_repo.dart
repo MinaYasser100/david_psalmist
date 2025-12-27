@@ -5,6 +5,7 @@ import 'package:david_psalmist/core/model/attendance_model/attendance_model.dart
 import 'package:david_psalmist/core/model/student_model/student_model.dart';
 import 'package:david_psalmist/features/attendance/data/service/attendance_services.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:uuid/uuid.dart';
 
 abstract class AttendanceRepo {
   Stream<Either<String, List<AttendanceModel>>> getAttendanceStream(
@@ -14,6 +15,11 @@ abstract class AttendanceRepo {
   Future<Either<String, String>> deleteAttendanceRecord({
     required StudentModel studentModel,
     required AttendanceModel attendanceModel,
+  });
+
+  Future<Either<String, String>> addAttendanceRecord({
+    required StudentModel studentModel,
+    required DateTime selectedDate,
   });
 }
 
@@ -72,6 +78,29 @@ class AttendanceRepoImpl implements AttendanceRepo {
       return Left(firestoreErrorHandler.mapFirebaseFirestoreException(e));
     } catch (e) {
       return Left('Unknown error occurred while deleting attendance'.tr());
+    }
+  }
+
+  @override
+  Future<Either<String, String>> addAttendanceRecord({
+    required StudentModel studentModel,
+    required DateTime selectedDate,
+  }) async {
+    try {
+      final attendanceModel = AttendanceModel(
+        id: Uuid().v4(),
+        studentId: studentModel.studentId!,
+        date: selectedDate,
+      );
+      await attendanceServices.addAttendanceRecord(
+        studentModel: studentModel,
+        attendanceModel: attendanceModel,
+      );
+      return Right('Attendance recorded successfully'.tr());
+    } on FirebaseException catch (e) {
+      return Left(firestoreErrorHandler.mapFirebaseFirestoreException(e));
+    } catch (e) {
+      return Left('Failed to record attendance'.tr());
     }
   }
 }

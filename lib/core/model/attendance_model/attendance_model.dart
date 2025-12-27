@@ -20,6 +20,10 @@ class AttendanceModel {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{'id': id, 'studentId': studentId, 'date': date};
+    return <String, dynamic>{
+      'id': id,
+      'studentId': studentId,
+      'date': Timestamp.fromDate(date),
+    };
   }
 }
