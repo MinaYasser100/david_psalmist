@@ -38,8 +38,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         labelText: widget.textFieldModel.labelText,
         hintText: widget.textFieldModel.hintText,
         errorText: widget.textFieldModel.errorText,
-        hintStyle: TextStyle(color: ColorsTheme().grayWhite),
-        labelStyle: TextStyle(color: ColorsTheme().primaryDark),
+        hintStyle: TextStyle(color: Colors.grey),
+        labelStyle: TextStyle(color: Colors.grey),
         prefixIcon: Icon(
           widget.textFieldModel.icon,
           size: 22,

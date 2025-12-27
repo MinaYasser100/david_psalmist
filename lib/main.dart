@@ -41,7 +41,10 @@ void main() async {
           ScannerCubit(getIt<ScannerRepoImpl>(), getIt<StudentRepoImpl>()),
     ),
     BlocProvider(
-      create: (context) => StudentsClassCubit(getIt<StudentsClassRepoImpl>()),
+      create: (context) => StudentsClassCubit(
+        getIt<StudentsClassRepoImpl>(),
+        getIt<StudentRepoImpl>(),
+      ),
     ),
     BlocProvider(
       create: (context) => AttendanceCubit(getIt<AttendanceRepoImpl>()),

@@ -32,6 +32,10 @@ abstract class StudentRepo {
   Future<Either<String, String>> updateStudent({
     required StudentModel studentModel,
   });
+
+  Future<Either<String, String>> deleteStudent({
+    required StudentModel studentModel,
+  });
 }
 
 class StudentRepoImpl implements StudentRepo {
@@ -184,6 +188,20 @@ class StudentRepoImpl implements StudentRepo {
       return Left(e.message ?? 'Failed to update student');
     } catch (e) {
       return const Left('Failed to update student');
+    }
+  }
+
+  @override
+  Future<Either<String, String>> deleteStudent({
+    required StudentModel studentModel,
+  }) async {
+    try {
+      await studentFirebaseServices.deleteStudent(studentModel: studentModel);
+      return Right('Student deleted successfully');
+    } on FirebaseException catch (e) {
+      return Left(e.message ?? 'Failed to delete student');
+    } catch (e) {
+      return const Left('Failed to delete student');
     }
   }
 }

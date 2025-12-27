@@ -57,6 +57,17 @@ class StudentFirebaseServices {
         .update(studentModel.toMap());
   }
 
+  Future<void> deleteStudent({required StudentModel studentModel}) async {
+    await _firestore
+        .collection(ConstantVariable.levelsCollection)
+        .doc(studentModel.levelId)
+        .collection(ConstantVariable.classesCollection)
+        .doc(studentModel.classId)
+        .collection(ConstantVariable.studentsCollection)
+        .doc(studentModel.studentId)
+        .delete();
+  }
+
   Future<void> attendanceRecorded({required StudentModel studentModel}) async {
     AttendanceModel attendanceModel = AttendanceModel(
       id: Uuid().v4(),
