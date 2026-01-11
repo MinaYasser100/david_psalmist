@@ -73,6 +73,7 @@ class StudentFirebaseServices {
       id: Uuid().v4(),
       studentId: studentModel.studentId!,
       date: DateTime.now(),
+      lessonsAttended: 3,
     );
     await _firestore
         .collection(ConstantVariable.levelsCollection)
@@ -84,5 +85,46 @@ class StudentFirebaseServices {
         .collection(ConstantVariable.attendanceCollection)
         .doc(attendanceModel.id)
         .set(attendanceModel.toMap());
+  }
+
+  Future<void> batchStudentAttendance({
+    required List<StudentModel> students,
+  }) async {
+    final batch = _firestore.batch();
+    final now = DateTime.now();
+
+    for (var student in students) {
+      final attendanceId = Uuid().v4();
+      final attendanceRef = _firestore
+          .collection(ConstantVariable.levelsCollection)
+          .doc(student.levelId)
+          .collection(ConstantVariable.classesCollection)
+          .doc(student.classId)
+          .collection(ConstantVariable.studentsCollection)
+          .doc(student.studentId)
+          .collection(ConstantVariable.attendanceCollection)
+          .doc(attendanceId);
+
+      final attendanceData = AttendanceModel(
+        id: attendanceId,
+        studentId: student.studentId!,
+        date: now,
+        lessonsAttended: 3,
+      ).toMap();
+
+      batch.set(attendanceRef, attendanceData);
+
+      final studentRef = _firestore
+          .collection(ConstantVariable.levelsCollection)
+          .doc(student.levelId)
+          .collection(ConstantVariable.classesCollection)
+          .doc(student.classId)
+          .collection(ConstantVariable.studentsCollection)
+          .doc(student.studentId);
+
+      batch.update(studentRef, {'attendanceCount': FieldValue.increment(1)});
+    }
+
+    await batch.commit();
   }
 }

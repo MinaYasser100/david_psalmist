@@ -1,6 +1,7 @@
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
+import 'package:david_psalmist/features/class_view/ui/widgets/scanned_students_bottom_sheet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +13,11 @@ class ScannerPage extends StatefulWidget {
     super.key,
     required this.classModel,
     required this.levelName,
+    this.batchMode = false,
   });
   final ClassModel classModel;
   final String levelName;
+  final bool batchMode;
 
   @override
   State<ScannerPage> createState() => _ScannerPageState();
@@ -32,6 +35,10 @@ class _ScannerPageState extends State<ScannerPage> {
       facing: CameraFacing.back,
       torchEnabled: false,
     );
+
+    if (widget.batchMode) {
+      context.read<ScannerCubit>().enableBatchMode();
+    }
   }
 
   @override
@@ -54,69 +61,141 @@ class _ScannerPageState extends State<ScannerPage> {
       context.read<ScannerCubit>().processScannedCode(code);
     }
 
-    Future.delayed(const Duration(milliseconds: 500), () async {
-      await context.read<ScannerCubit>().checkStudentAttendance(
+    if (widget.batchMode) {
+      // Batch mode: add student to list
+      context.read<ScannerCubit>().addStudentToBatchFromName(
         studentName: code,
         levelName: widget.levelName,
         classModel: widget.classModel,
       );
-      if (mounted) Navigator.of(context).pop();
-    });
+
+      // Reset scanner for next scan
+      Future.delayed(const Duration(milliseconds: 800), () {
+        if (mounted) {
+          setState(() {
+            _scanned = false;
+          });
+        }
+      });
+    } else {
+      // Normal mode: record attendance immediately
+      Future.delayed(const Duration(milliseconds: 500), () async {
+        await context.read<ScannerCubit>().checkStudentAttendance(
+          studentName: code,
+          levelName: widget.levelName,
+          classModel: widget.classModel,
+        );
+        if (mounted) Navigator.of(context).pop();
+      });
+    }
+  }
+
+  void _showScannedStudents() {
+    final students = context.read<ScannerCubit>().scannedStudents;
+    ScannedStudentsBottomSheet.show(context, students);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('Scan QR Code'.tr()),
-        actions: [
-          IconButton(
-            onPressed: () => _controller.toggleTorch(),
-            icon: const Icon(Icons.flash_on),
-          ),
-        ],
-      ),
-      body: Stack(
-        children: [
-          MobileScanner(
-            controller: _controller,
-            fit: BoxFit.cover,
-            onDetect: _onDetect,
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 40,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 40),
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    "Place the QR code inside the area to scan it".tr(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: ColorsTheme().whiteColor),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    'cancel'.tr(),
-                    style: AppTextStyles.styleBold20sp(context),
-                  ),
-                ),
-              ],
+    return BlocListener<ScannerCubit, ScannerState>(
+      listener: (context, state) {
+        if (state is ScannerBatchSuccess) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('batch_attendance_success'.tr()),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.of(context).pop();
+          }
+        } else if (state is ScannerBatchError) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error), backgroundColor: Colors.red),
+            );
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          elevation: 0,
+          title: Text('Scan QR Code'.tr()),
+          actions: [
+            IconButton(
+              onPressed: () => _controller.toggleTorch(),
+              icon: const Icon(Icons.flash_on),
             ),
-          ),
-        ],
+          ],
+        ),
+        body: Stack(
+          children: [
+            MobileScanner(
+              controller: _controller,
+              fit: BoxFit.cover,
+              onDetect: _onDetect,
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 40,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      "Place the QR code inside the area to scan it".tr(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: ColorsTheme().whiteColor),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(
+                      'cancel'.tr(),
+                      style: AppTextStyles.styleBold20sp(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: widget.batchMode
+            ? BlocBuilder<ScannerCubit, ScannerState>(
+                builder: (context, state) {
+                  final count = state is ScannerBatchMode
+                      ? state.scannedStudents.length
+                      : 0;
+
+                  if (count == 0) return const SizedBox.shrink();
+
+                  return FloatingActionButton.extended(
+                    onPressed: _showScannedStudents,
+                    backgroundColor: ColorsTheme().primaryColor,
+                    icon: const Icon(
+                      Icons.people_alt_rounded,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      '${'scanned'.tr()}: $count',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                },
+              )
+            : null,
       ),
     );
   }

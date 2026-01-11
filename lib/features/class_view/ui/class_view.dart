@@ -5,6 +5,7 @@ import 'package:david_psalmist/features/class_view/manager/students_class_cubit/
 import 'package:david_psalmist/features/class_view/ui/widgets/add_student_bottom_sheet.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/class_body_view.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:david_psalmist/features/class_view/ui/scanner_page.dart';
@@ -54,8 +55,44 @@ class _ClassViewState extends State<ClassView> {
       ),
       body: ClassBodyView(classModel: widget.classModel),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showQRScanner(context),
+        onPressed: () => _showScannerOptions(context),
         child: const Icon(Icons.qr_code_scanner),
+      ),
+    );
+  }
+
+  void _showScannerOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(
+                Icons.qr_code_scanner,
+                color: ColorsTheme().primaryColor,
+              ),
+              title: Text('Single Scan'.tr()),
+              subtitle: Text('Record one student at a time'.tr()),
+              onTap: () {
+                Navigator.pop(context);
+                _showQRScanner(context, batchMode: false);
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.qr_code_2, color: ColorsTheme().primaryColor),
+              title: Text('Batch Scan'.tr()),
+              subtitle: Text('Scan multiple students and submit together'.tr()),
+              onTap: () {
+                Navigator.pop(context);
+                _showQRScanner(context, batchMode: true);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -78,11 +115,17 @@ class _ClassViewState extends State<ClassView> {
     );
   }
 
-  void _showQRScanner(BuildContext context) {
+  void _showQRScanner(BuildContext context, {bool batchMode = false}) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) =>
-            ScannerPage(classModel: widget.classModel, levelName: ''),
+        builder: (_) => BlocProvider.value(
+          value: context.read<ScannerCubit>(),
+          child: ScannerPage(
+            classModel: widget.classModel,
+            levelName: '',
+            batchMode: batchMode,
+          ),
+        ),
       ),
     );
   }
@@ -91,7 +134,7 @@ class _ClassViewState extends State<ClassView> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       builder: (sheetContext) => BlocProvider.value(
         value: context.read<ScannerCubit>(),
         child: AddStudentBottomSheet(

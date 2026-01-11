@@ -1,4 +1,4 @@
-{
+﻿{
     "welcomeMessage": "Welcome",
     "levelName": "Level Name",
     "add": "Add",
@@ -46,7 +46,6 @@
     "Add new students to get started!" : "Add new students to get started!",
     "Error fetching attendance records" : "Error fetching attendance records",
     "No attendance records found." : "No attendance records found.",
-    "Attendance record deleted successfully" : "Attendance record deleted successfully",
     "Unknown error occurred while deleting attendance" : "Unknown error occurred while deleting attendance",
     "Add New Student": "Add New Student",
     "Edit Student": "Edit Student",
@@ -99,4 +98,17 @@
     "Edit Lessons": "Edit Lessons",
     "How many lessons did the student attend?": "How many lessons did the student attend?",
     "Lessons updated successfully": "Lessons updated successfully"
+,
+    "scanned_students": "Scanned Students",
+    "no_students_scanned": "No students scanned yet",
+    "submit_attendance": "Submit Attendance",
+    "student_already_scanned": "Student already scanned",
+    "student_not_found": "Student not found",
+    "error_occurred": "An error occurred",
+    "batch_attendance_success": "Attendance submitted successfully for all students",
+    "scanned": "Scanned",
+    "Single Scan": "Single Scan",
+    "Record one student at a time": "Record one student at a time",
+    "Batch Scan": "Batch Scan",
+    "Scan multiple students and submit together": "Scan multiple students and submit together"
 }

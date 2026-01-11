@@ -36,6 +36,10 @@ abstract class StudentRepo {
   Future<Either<String, String>> deleteStudent({
     required StudentModel studentModel,
   });
+
+  Future<Either<String, String>> batchStudentAttendance({
+    required List<StudentModel> students,
+  });
 }
 
 class StudentRepoImpl implements StudentRepo {
@@ -202,6 +206,20 @@ class StudentRepoImpl implements StudentRepo {
       return Left(e.message ?? 'Failed to delete student');
     } catch (e) {
       return const Left('Failed to delete student');
+    }
+  }
+
+  @override
+  Future<Either<String, String>> batchStudentAttendance({
+    required List<StudentModel> students,
+  }) async {
+    try {
+      await studentFirebaseServices.batchStudentAttendance(students: students);
+      return Right('Batch attendance recorded for ${students.length} students');
+    } on FirebaseException catch (e) {
+      return Left(firestoreErrorHandler.mapFirebaseFirestoreException(e));
+    } catch (e) {
+      return Left('Error recording batch attendance: $e');
     }
   }
 }

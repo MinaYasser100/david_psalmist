@@ -29,3 +29,21 @@ final class ScannerAttendanceError extends ScannerState {
   final String error;
   ScannerAttendanceError(this.error);
 }
+
+// Batch Attendance States
+final class ScannerBatchMode extends ScannerState {
+  final List<StudentModel> scannedStudents;
+  ScannerBatchMode(this.scannedStudents);
+}
+
+final class ScannerBatchSubmitting extends ScannerState {}
+
+final class ScannerBatchSuccess extends ScannerState {
+  final String message;
+  ScannerBatchSuccess(this.message);
+}
+
+final class ScannerBatchError extends ScannerState {
+  final String error;
+  ScannerBatchError(this.error);
+}
