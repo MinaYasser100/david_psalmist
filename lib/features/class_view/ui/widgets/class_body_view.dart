@@ -1,16 +1,13 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/core/theme/app_style.dart';
 import 'package:david_psalmist/core/utils/colors.dart';
 import 'package:david_psalmist/core/utils/show_top_toast.dart';
 import 'package:david_psalmist/features/class_view/manager/students_class_cubit/students_class_cubit.dart';
+import 'package:david_psalmist/features/class_view/ui/widgets/class_body_widgets/normal_mode_student_item.dart';
+import 'package:david_psalmist/features/class_view/ui/widgets/class_body_widgets/selection_mode_student_item.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
-import 'custom_student_item.dart';
 
 class ClassBodyView extends StatelessWidget {
   const ClassBodyView({super.key, required this.classModel});
@@ -59,65 +56,14 @@ class ClassBodyView extends StatelessWidget {
                 student.studentId,
               );
 
-              return FadeInRight(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 6.0,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      cubit.toggleStudentSelection(student.studentId!);
-                    },
-                    child: Stack(
-                      children: [
-                        // Student Item
-                        CustomStudentItem(
-                          student: student,
-                          index: index,
-                          classModel: classModel,
-                          isSelectionMode: true,
-                        ),
-                        // Checkbox Circle on top right
-                        Positioned(
-                          top: 8,
-                          right: 8,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            width: 28,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: isSelected
-                                  ? ColorsTheme().primaryColor
-                                  : Colors.white,
-                              border: Border.all(
-                                color: isSelected
-                                    ? ColorsTheme().primaryColor
-                                    : Colors.grey.shade400,
-                                width: 2,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: isSelected
-                                ? const Icon(
-                                    Icons.check_rounded,
-                                    size: 18,
-                                    color: Colors.white,
-                                  )
-                                : null,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              return SelectionModeStudentItem(
+                student: student,
+                index: index,
+                classModel: classModel,
+                isSelected: isSelected,
+                onTap: () {
+                  cubit.toggleStudentSelection(student.studentId!);
+                },
               );
             },
           );
@@ -128,18 +74,10 @@ class ClassBodyView extends StatelessWidget {
           itemCount: students.length,
           itemBuilder: (context, index) {
             final student = students[index];
-            return FadeInRight(
-              child: GestureDetector(
-                onTap: () {
-                  context.push(Routes.attendanceView, extra: student);
-                },
-                child: CustomStudentItem(
-                  student: student,
-                  index: index,
-                  classModel: classModel,
-                  isSelectionMode: false,
-                ),
-              ),
+            return NormalModeStudentItem(
+              student: student,
+              index: index,
+              classModel: classModel,
             );
           },
         );
