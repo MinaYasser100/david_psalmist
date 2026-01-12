@@ -58,14 +58,31 @@ class StudentFirebaseServices {
   }
 
   Future<void> deleteStudent({required StudentModel studentModel}) async {
-    await _firestore
+    final studentDocRef = _firestore
         .collection(ConstantVariable.levelsCollection)
         .doc(studentModel.levelId)
         .collection(ConstantVariable.classesCollection)
         .doc(studentModel.classId)
         .collection(ConstantVariable.studentsCollection)
-        .doc(studentModel.studentId)
-        .delete();
+        .doc(studentModel.studentId);
+
+    // First, delete all attendance records in the Attendances sub-collection
+    final attendancesSnapshot = await studentDocRef
+        .collection(ConstantVariable.attendanceCollection)
+        .get();
+
+    // Use batch to delete all attendance documents
+    final batch = _firestore.batch();
+
+    for (var doc in attendancesSnapshot.docs) {
+      batch.delete(doc.reference);
+    }
+
+    // Delete the student document itself
+    batch.delete(studentDocRef);
+
+    // Commit the batch
+    await batch.commit();
   }
 
   /// Check if student has attendance record for today
