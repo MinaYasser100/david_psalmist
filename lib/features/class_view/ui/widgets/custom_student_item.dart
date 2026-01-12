@@ -16,15 +16,32 @@ class CustomStudentItem extends StatelessWidget {
     required this.student,
     required this.index,
     required this.classModel,
+    this.isSelectionMode = false,
   });
 
   final StudentModel student;
   final int index;
   final ClassModel classModel;
+  final bool isSelectionMode;
 
   @override
   Widget build(BuildContext context) {
     final theme = ColorsTheme();
+
+    // If in selection mode, don't show dismissible
+    if (isSelectionMode) {
+      return Padding(
+        padding: const EdgeInsets.all(0),
+        child: CustomStudentItemView(
+          theme: theme,
+          index: index,
+          student: student,
+          classModel: classModel,
+        ),
+      );
+    }
+
+    // Normal mode with dismissible
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
       child: Dismissible(

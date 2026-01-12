@@ -1,4 +1,4 @@
-import 'package:david_psalmist/core/routing/routes.dart';
+﻿import 'package:david_psalmist/core/routing/routes.dart';
 import 'package:david_psalmist/features/class_view/manager/scanner_cubit/scanner_cubit.dart';
 import 'package:david_psalmist/features/class_view/manager/students_class_cubit/students_class_cubit.dart';
 import 'package:david_psalmist/features/class_view/ui/widgets/add_student_bottom_sheet.dart';
@@ -70,7 +70,10 @@ class _ClassViewState extends State<ClassView> {
   void _navigateToSearch(BuildContext context, StudentsClassCubit cubit) {
     context.push(
       Routes.studentsSearchView,
-      extra: {'students': cubit.students, 'classModel': widget.classModel},
+      extra: {
+        'students': cubit.students,
+        'classModel': widget.classModel,
+      },
     );
   }
 
@@ -112,3 +115,4 @@ class _ClassViewState extends State<ClassView> {
     );
   }
 }
+
