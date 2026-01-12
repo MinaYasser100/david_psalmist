@@ -164,6 +164,15 @@ class StudentRepoImpl implements StudentRepo {
     required StudentModel studentModel,
   }) async {
     try {
+      // Check if student already has attendance today
+      final hasAttendance = await studentFirebaseServices.hasAttendanceToday(
+        studentModel: studentModel,
+      );
+
+      if (hasAttendance) {
+        return Right('Student already has attendance recorded for today');
+      }
+
       studentModel.attendanceCount = studentModel.attendanceCount! + 1;
       await studentFirebaseServices.updateStudentAttendance(
         studentModel: studentModel,
@@ -214,8 +223,28 @@ class StudentRepoImpl implements StudentRepo {
     required List<StudentModel> students,
   }) async {
     try {
-      await studentFirebaseServices.batchStudentAttendance(students: students);
-      return Right('Batch attendance recorded for ${students.length} students');
+      // Filter out students who already have attendance today
+      final studentsNeedingAttendance = await studentFirebaseServices
+          .filterStudentsWithoutTodayAttendance(students: students);
+
+      if (studentsNeedingAttendance.isEmpty) {
+        return Right('All students already have attendance recorded for today');
+      }
+
+      await studentFirebaseServices.batchStudentAttendance(
+        students: studentsNeedingAttendance,
+      );
+
+      final recordedCount = studentsNeedingAttendance.length;
+      final skippedCount = students.length - recordedCount;
+
+      if (skippedCount > 0) {
+        return Right(
+          'Batch attendance recorded for $recordedCount students. $skippedCount students already had attendance today.',
+        );
+      }
+
+      return Right('Batch attendance recorded for $recordedCount students');
     } on FirebaseException catch (e) {
       return Left(firestoreErrorHandler.mapFirebaseFirestoreException(e));
     } catch (e) {

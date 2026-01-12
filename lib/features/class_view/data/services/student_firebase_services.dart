@@ -68,6 +68,63 @@ class StudentFirebaseServices {
         .delete();
   }
 
+  /// Check if student has attendance record for today
+  Future<bool> hasAttendanceToday({
+    required StudentModel studentModel,
+    DateTime? checkDate,
+  }) async {
+    final targetDate = checkDate ?? DateTime.now();
+    final startOfDay = DateTime(
+      targetDate.year,
+      targetDate.month,
+      targetDate.day,
+    );
+    final endOfDay = DateTime(
+      targetDate.year,
+      targetDate.month,
+      targetDate.day,
+      23,
+      59,
+      59,
+      999,
+    );
+
+    final snapshot = await _firestore
+        .collection(ConstantVariable.levelsCollection)
+        .doc(studentModel.levelId)
+        .collection(ConstantVariable.classesCollection)
+        .doc(studentModel.classId)
+        .collection(ConstantVariable.studentsCollection)
+        .doc(studentModel.studentId)
+        .collection(ConstantVariable.attendanceCollection)
+        .where('date', isGreaterThanOrEqualTo: startOfDay)
+        .where('date', isLessThanOrEqualTo: endOfDay)
+        .limit(1)
+        .get();
+
+    return snapshot.docs.isNotEmpty;
+  }
+
+  /// Check attendance for multiple students for a specific date
+  Future<List<StudentModel>> filterStudentsWithoutTodayAttendance({
+    required List<StudentModel> students,
+    DateTime? checkDate,
+  }) async {
+    final List<StudentModel> studentsNeedingAttendance = [];
+
+    for (var student in students) {
+      final hasAttendance = await hasAttendanceToday(
+        studentModel: student,
+        checkDate: checkDate,
+      );
+      if (!hasAttendance) {
+        studentsNeedingAttendance.add(student);
+      }
+    }
+
+    return studentsNeedingAttendance;
+  }
+
   Future<void> attendanceRecorded({required StudentModel studentModel}) async {
     AttendanceModel attendanceModel = AttendanceModel(
       id: Uuid().v4(),
