@@ -38,6 +38,13 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
             onPressed: () {
+              context.push(Routes.globalSearchView);
+            },
+            icon: const Icon(Icons.search),
+            tooltip: 'Search Students'.tr(),
+          ),
+          IconButton(
+            onPressed: () {
               context.push(Routes.settingsView);
             },
             icon: const Icon(Icons.settings),

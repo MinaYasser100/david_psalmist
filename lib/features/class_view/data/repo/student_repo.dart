@@ -103,7 +103,9 @@ class StudentRepoImpl implements StudentRepo {
         studentFather: fatherName,
         isPsalmist: isPsalmist ?? false,
         createdAt: DateTime.now(),
-        levelName: levelName,
+        levelName:
+            classModel.levelName ??
+            (levelName.isNotEmpty ? levelName : 'Unknown Level'),
         levelId: classModel.levelId,
         className: classModel.name,
         classId: classModel.id,

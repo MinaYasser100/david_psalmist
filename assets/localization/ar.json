@@ -109,5 +109,10 @@
     "Single Scan": "مسح فردي",
     "Record one student at a time": "تسجيل طالب واحد في المرة",
     "Batch Scan": "مسح جماعي",
-    "Scan multiple students and submit together": "مسح عدة طلاب وتسجيلهم معاً"
+    "Scan multiple students and submit together": "مسح عدة طلاب وتسجيلهم معاً",
+    "Search Students": "البحث عن الطلاب",
+    "Search by student name": "البحث باسم الطالب",
+    "Search for students": "ابحث عن الطلاب",
+    "Type student name to search": "اكتب اسم الطالب للبحث",
+    "No results found": "لم يتم العثور على نتائج"
 }

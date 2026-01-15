@@ -59,10 +59,22 @@ class ClassesRepoImpl implements ClassesRepo {
         .doc(levelId)
         .collection(ConstantVariable.classesCollection)
         .snapshots()
-        .map((querySnapshot) {
+        .asyncMap((querySnapshot) async {
+          // Fetch level name once
+          final levelDoc = await _firestore
+              .collection(ConstantVariable.levelsCollection)
+              .doc(levelId)
+              .get();
+          final levelName = levelDoc.data()?['name'] ?? 'Unknown Level';
+
           return querySnapshot.docs.map((doc) {
             final data = doc.data();
-            return ClassModel(id: doc.id, name: data['name'], levelId: levelId);
+            return ClassModel(
+              id: doc.id,
+              name: data['name'],
+              levelId: levelId,
+              levelName: levelName,
+            );
           }).toList();
         });
   }

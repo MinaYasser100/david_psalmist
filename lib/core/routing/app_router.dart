@@ -13,6 +13,9 @@ import 'package:david_psalmist/features/student_details/ui/student_details_view.
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:david_psalmist/features/classes/data/model/class_model.dart';
 import 'package:david_psalmist/features/classes/ui/classes_view.dart';
+import 'package:david_psalmist/features/home/manager/global_search_cubit/global_search_cubit.dart';
+import 'package:david_psalmist/features/home/ui/widgets/global_search_view.dart';
+import 'package:david_psalmist/features/home/data/repo/global_search_repo.dart';
 import 'package:david_psalmist/features/forgot_password/ui/forgot_password_view.dart';
 import 'package:david_psalmist/features/home/data/model/level_model.dart';
 import 'package:david_psalmist/features/home/ui/home_view.dart';
@@ -84,6 +87,19 @@ abstract class AppRouter {
       GoRoute(
         path: Routes.settingsView,
         pageBuilder: (context, state) => fadeTransitionPage(SettingsView()),
+      ),
+      // Global Search View
+      GoRoute(
+        path: Routes.globalSearchView,
+        pageBuilder: (context, state) {
+          return fadeTransitionPage(
+            BlocProvider(
+              create: (context) =>
+                  GlobalSearchCubit(getIt<GlobalSearchRepoImpl>()),
+              child: const GlobalSearchView(),
+            ),
+          );
+        },
       ),
       // Students Search View
       GoRoute(

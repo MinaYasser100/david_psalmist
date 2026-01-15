@@ -12,6 +12,8 @@ import 'package:david_psalmist/features/class_view/data/services/students_class_
 import 'package:david_psalmist/features/classes/data/repo/classes_repo_impl.dart';
 import 'package:david_psalmist/features/forgot_password/data/repo/forgot_password_repo_impl.dart';
 import 'package:david_psalmist/features/home/data/repo/level_repo_impl.dart';
+import 'package:david_psalmist/features/home/data/repo/global_search_repo.dart';
+import 'package:david_psalmist/features/home/data/services/global_search_services.dart';
 import 'package:david_psalmist/features/login/data/repo/login_repo_impl.dart';
 import 'package:david_psalmist/features/register/data/repo/register_repo_impl.dart';
 import 'package:david_psalmist/features/verfiy_email/data/repo/verify_email_repo_impl.dart';
@@ -58,6 +60,13 @@ void setupDependencies() async {
 
   getIt.registerSingleton<LevelRepoImpl>(
     LevelRepoImpl(getIt<FirebaseFirestoreErrorHandler>()),
+  );
+
+  // Global Search Services
+  getIt.registerSingleton<GlobalSearchServices>(GlobalSearchServices());
+  // Global Search Repo Impl
+  getIt.registerSingleton<GlobalSearchRepoImpl>(
+    GlobalSearchRepoImpl(getIt<GlobalSearchServices>()),
   );
 
   getIt.registerSingleton<ClassesRepoImpl>(

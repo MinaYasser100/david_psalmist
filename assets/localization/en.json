@@ -110,5 +110,10 @@
     "Single Scan": "Single Scan",
     "Record one student at a time": "Record one student at a time",
     "Batch Scan": "Batch Scan",
-    "Scan multiple students and submit together": "Scan multiple students and submit together"
+    "Scan multiple students and submit together": "Scan multiple students and submit together",
+    "Search Students": "Search Students",
+    "Search by student name": "Search by student name",
+    "Search for students": "Search for students",
+    "Type student name to search": "Type student name to search",
+    "No results found": "No results found"
 }
